@@ -1,8 +1,8 @@
-const main = (req, res) => {
+const deleteFilm = (req, res) => {
   res.status(200);
   res.json({
     text: "Test route is successfull",
   });
 };
 
-module.exports = main;
+module.exports = deleteFilm;
