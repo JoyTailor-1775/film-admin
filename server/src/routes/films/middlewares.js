@@ -1,4 +1,5 @@
 const addFilm = (req, res, next) => {
+  console.log(req.body, 'req.body');
   if (
     req.body.title &&
     req.body.release_year &&

@@ -11,6 +11,6 @@ const filmSchema = new Schema({
 
 filmSchema.plugin(timestamp);
 
-const Post = mongoose.model('Post', filmSchema);
+const Film = mongoose.model('Film', filmSchema);
 
-module.exports = Post;
+module.exports = Film;

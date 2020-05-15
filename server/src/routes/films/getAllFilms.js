@@ -1,8 +1,15 @@
+const Film = require('../../modules/db/schemas/filmSchema');
+const sendDbError = require('../../globals/sendDbError');
+
 const getAllFilms = (req, res) => {
-  res.status(200);
-  res.json({
-    text: "Test route is successfull",
-  });
+  const sendResponse = (films) => {
+    res.status(200);
+    res.json({
+      status: 'Request is successfull',
+      data: films,
+    });
+  };
+  Film.find().then(sendResponse).catch(sendDbError);
 };
 
 module.exports = getAllFilms;

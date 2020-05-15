@@ -1,6 +1,6 @@
-const express = require("express");
-const bodyParser = require("body-parser");
-const router = require("./routes/router");
+const express = require('express');
+const bodyParser = require('body-parser');
+const router = require('./routes/router');
 
 const app = express();
 
@@ -11,9 +11,9 @@ const errorHandler = (req, res, err) => {
 
 const startServer = (port) => {
   app
-    .use(bodyParser.urlencoded({ extended: false }))
+    .use(bodyParser.urlencoded({ extended: true }))
     .use(bodyParser.json())
-    .use("/", router)
+    .use('/', router)
     .use(errorHandler);
 
   app.listen(port);

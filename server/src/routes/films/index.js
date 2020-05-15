@@ -1,6 +1,6 @@
 const _addFilm = require('./addFilm');
 const _deleteFilm = require('./deleteFilm');
-const _editFilm = require('./editFilm');
+const _updateFilm = require('./updateFilm');
 const _getAllFilms = require('./getAllFilms');
 const _getFilmById = require('./getFilmById');
 const _importFilmsFromFile = require('./importFilmsFromFile');
@@ -9,7 +9,7 @@ const _middlewares = require('./middlewares');
 module.exports = {
   addFilm: _addFilm,
   deleteFilm: _deleteFilm,
-  editFilm: _editFilm,
+  updateFilm: _updateFilm,
   getAllFilms: _getAllFilms,
   importFilmsFromFile: _importFilmsFromFile,
   getFilmById: _getFilmById,
