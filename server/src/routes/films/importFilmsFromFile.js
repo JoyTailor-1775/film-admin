@@ -51,11 +51,10 @@ const importFilmsFromFile = (req, res) => {
     const formattedFilms = films.map((el) => {
       return renameObjKey(el, 'stars', 'cast');
     });
-    console.log({ formattedFilms });
     Film.collection
       .insertMany(formattedFilms)
       .then(sendResponse)
-      .catch(sendDbError);
+      .catch((err) => sendDbError(err, res));
   });
 };
 

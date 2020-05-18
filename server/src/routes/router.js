@@ -3,7 +3,7 @@ const films = require('./films');
 
 const apiRoutes = express.Router();
 
-apiRoutes.get('/films/:id', films.getFilmById);
+apiRoutes.get('/films-get-one', films.getFilmById);
 apiRoutes.post('/films-edit', films.updateFilm);
 apiRoutes.post('/films-add', films.middlewares.addFilm, films.addFilm);
 apiRoutes.post('/films-delete', films.deleteFilm);

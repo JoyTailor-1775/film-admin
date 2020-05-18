@@ -12,7 +12,10 @@ const addFilm = (req, res) => {
       data: film,
     });
   };
-  newFilm.save().then(sendResponse).catch(sendDbError);
+  newFilm
+    .save()
+    .then((data) => sendResponse(data))
+    .catch((err) => sendDbError(err, res));
 };
 
 module.exports = addFilm;

@@ -1,18 +1,13 @@
 const Film = require('../../modules/db/schemas/filmSchema');
 const sendDbError = require('../../globals/sendDbError');
+const sendDbResponse = require('../../globals/sendDbResponse');
 
 const getFilmById = (req, res) => {
   const id = req.body.id;
 
-  const sendResponse = (film) => {
-    res.status(200);
-    res.json({
-      status: 'Request is successfull',
-      data: film,
-    });
-  };
-
-  Film.getById(id).then(sendResponse).catch(sendDbError);
+  Film.findById(id)
+    .then((data) => sendDbResponse(data, res))
+    .catch((err) => sendDbError(err, res));
 };
 
 module.exports = getFilmById;

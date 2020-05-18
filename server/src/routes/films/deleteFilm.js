@@ -1,18 +1,13 @@
 const Film = require('../../modules/db/schemas/filmSchema');
 const sendDbError = require('../../globals/sendDbError');
+const sendDbResponse = require('../../globals/sendDbResponse');
 
 const deleteFilm = (req, res) => {
   const id = req.body.id;
 
-  const sendResponse = (film) => {
-    res.status(200);
-    res.json({
-      status: 'The film is successfully deleted',
-      data: film,
-    });
-  };
-
-  Film.findOneAndDelete({ _id: id }).then(sendResponse).catch(sendDbError);
+  Film.findOneAndDelete({ _id: id })
+    .then((data) => sendDbResponse(data, res))
+    .catch((err) => sendDbError(err, res));
 };
 
 module.exports = deleteFilm;
