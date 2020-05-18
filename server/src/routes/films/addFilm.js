@@ -3,13 +3,12 @@ const sendDbError = require('../../globals/sendDbError');
 
 const addFilm = (req, res) => {
   const film = req.body;
-  console.log(film);
   const newFilm = new Film(film);
 
   const sendResponse = (film) => {
     res.status(200);
     res.json({
-      status: 'The post is successfully created',
+      status: 'The film is successfully created',
       data: film,
     });
   };

@@ -7,7 +7,7 @@ const updateFilm = (req, res) => {
   const sendResponse = (film) => {
     res.status(200);
     res.json({
-      status: 'The post is successfully updated',
+      status: 'The film is successfully updated',
       data: film,
     });
   };

@@ -7,7 +7,7 @@ const deleteFilm = (req, res) => {
   const sendResponse = (film) => {
     res.status(200);
     res.json({
-      status: 'The post is successfully deleted',
+      status: 'The film is successfully deleted',
       data: film,
     });
   };

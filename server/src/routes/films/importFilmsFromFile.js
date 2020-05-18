@@ -1,6 +1,9 @@
 const fs = require('fs');
 const formidable = require('formidable');
+const sendDbError = require('../../globals/sendDbError');
 const sendRegularError = require('../../globals/sendRegularError');
+const Film = require('../../modules/db/schemas/filmSchema');
+const renameObjKey = require('../../helpers/renameObjKey');
 
 const importFilmsFromFile = (req, res) => {
   const transpileTextFile = (file) => {
@@ -10,7 +13,13 @@ const importFilmsFromFile = (req, res) => {
       }
       return data;
     });
-
+    /*
+     Here we are transpiling incoming text file into semantic js-objects. 
+     Firstly, we split the doc by double new-line chars \r\n , getting arrays
+     of separate entities. Then we split them again by one new-line char
+     and finally by the : sign, getting an array, where the first elem is 
+     a key name and the second one is the value.
+    */
     let films = [];
     const chuncksArr = data.toString().split('\r\n\r\n');
     chuncksArr.forEach((chunck) => {
@@ -29,14 +38,24 @@ const importFilmsFromFile = (req, res) => {
     return films;
   };
 
-  new formidable.IncomingForm().parse(req, (err, fields, files) => {
-    const films = transpileTextFile(files.file.path);
-
+  const sendResponse = (films) => {
     res.status(200);
     res.json({
-      text: 'Test route is successfull',
+      status: 'The films were successfully imported and uploaded to the db',
       data: films,
     });
+  };
+
+  new formidable.IncomingForm().parse(req, (err, fields, files) => {
+    const films = transpileTextFile(files.file.path);
+    const formattedFilms = films.map((el) => {
+      return renameObjKey(el, 'stars', 'cast');
+    });
+    console.log({ formattedFilms });
+    Film.collection
+      .insertMany(formattedFilms)
+      .then(sendResponse)
+      .catch(sendDbError);
   });
 };
 
