@@ -1,5 +1,5 @@
-const dbUser = "joy_tailor";
-const dbUserPassword = "mC6B8R77shdR83Vl";
+const dbUser = 'joy_tailor';
+const dbUserPassword = 'mC6B8R77shdR83Vl';
 
 module.exports = {
   port: 3001,
