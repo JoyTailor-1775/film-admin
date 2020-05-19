@@ -7,7 +7,7 @@
   text-transform: uppercase;
   font-weight: 900;
   cursor: pointer;
-  padding: 5px;
+  padding: 5px 7px;
   box-sizing: border-box;
 
   &:focus {
@@ -18,19 +18,28 @@
 .small {
   min-width: 30px;
   height: 30px;
-  font-size: 12px;
+  font-size: 14px;
 }
 
 .medium {
   min-width: 35px;
   height: 35px;
-  font-size: 18px;
+  font-size: 16px;
 }
 
 .large {
   min-width: 40px;
   height: 40px;
   font-size: 18px;
+}
+
+.regular {
+  color: #ffffff;
+  background-color: $black;
+  border: solid 1px $black;
+  &:hover {
+    animation: regularHover 1.5s linear;
+  }
 }
 
 .primary {
@@ -93,5 +102,17 @@
   50% {
     background-color: #ffff;
     color: $green;
+  }
+}
+
+@keyframes regularHover {
+  0%,
+  100% {
+    background-color: $black;
+    color: #ffff;
+  }
+  50% {
+    background-color: #ffff;
+    color: $black;
   }
 }

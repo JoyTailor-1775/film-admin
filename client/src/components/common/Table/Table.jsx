@@ -1,6 +1,7 @@
 import React from 'react';
 import Button from '../Button';
 import Spinner from '../Spinner';
+import './Table.scss';
 /*
   A Table component needs next required parameters to be used:
     1) columns - an array of objects, which represents the properties of 
@@ -8,9 +9,12 @@ import Spinner from '../Spinner';
         {
           heading: String,
           dataKey: String,
+          width: String,
         }
         heading - is a name of column, that will be displayed in the column head.
         dataKey - is a key, by which the column will get it's values from data prop.
+        width - is a desired width of a column, should be represented in semantic css 
+        size units: px, %, em, rem, etc. All columns width are set to 50px by default.
     2) data - an array of objects, a data that will be shown in the table. The
         data won't be shown in the table, unless neccessary dataKeys are provides in 
         columns prop.
@@ -41,10 +45,14 @@ const Table = ({
   return (
     <table className="table">
       <thead className="table__head">
-        <tr className="table__row table__row--head">
+        <tr className="table__row">
           {columns.map((col, idx) => {
             return (
-              <th className="table__heading" key={idx}>
+              <th
+                className="table__heading"
+                style={{ width: col.width ? col.width : '50px' }}
+                key={idx}
+              >
                 {col.heading}
               </th>
             );
@@ -56,7 +64,11 @@ const Table = ({
       </thead>
       <tbody className="table__body">
         {loading ? (
-          <Spinner />
+          <tr className="table__spinner">
+            <td>
+              <Spinner />
+            </td>
+          </tr>
         ) : data.length < 1 ? (
           <p className="table__message">No data</p>
         ) : (
@@ -69,13 +81,17 @@ const Table = ({
               >
                 {columns.map((col, idx) => {
                   return (
-                    <td className="table__cell" key={idx}>
+                    <td
+                      className="table__cell"
+                      key={idx}
+                      style={{ width: col.width ? col.width : '50px' }}
+                    >
                       {obj[col.dataKey] ? obj[col.dataKey] : ''}
                     </td>
                   );
                 })}
                 {deletable && (
-                  <td className="table__cell table__cell-delete">
+                  <td className="table__cell table__cell--delete">
                     <Button
                       text="X"
                       color="error"

@@ -1,10 +1,11 @@
 import React from 'react';
+import './Modal.scss';
 
 const Modal = ({
   visible,
   onModalClose,
   title,
-  content,
+  children,
   cancelButton,
   actionButton,
 }) => {
@@ -15,7 +16,7 @@ const Modal = ({
     >
       <div className="modal">
         <h3 className="modal__title">{title}</h3>
-        <div className="modal__content">{content}</div>
+        <div className="modal__content">{children}</div>
         <div className="modal__actions">
           {cancelButton} {actionButton && actionButton}
         </div>

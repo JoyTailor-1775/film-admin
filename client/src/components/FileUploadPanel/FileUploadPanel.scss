@@ -1,0 +1,36 @@
+@import '../../globals/variables.scss';
+
+.panel {
+  margin: 40px 0px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+
+  &__input-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    position: relative;
+  }
+
+  &__input {
+    text-transform: uppercase;
+    cursor: pointer;
+    color: $dark-red;
+    border: solid 1px $dark-red;
+    border-radius: 10px;
+    padding: 8px;
+    box-sizing: border-box;
+  }
+
+  input[type='file'] {
+    display: none;
+  }
+
+  .chosen-file {
+    margin: 0px;
+    position: absolute;
+    bottom: -1.5rem;
+  }
+}

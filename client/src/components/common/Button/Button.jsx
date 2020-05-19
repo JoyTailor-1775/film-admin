@@ -17,6 +17,7 @@ const Button = ({
     primary: 'primary',
     error: 'error',
     action: 'action',
+    regular: 'regular',
   });
 
   const ButtonSizeTypes = Object.freeze({
