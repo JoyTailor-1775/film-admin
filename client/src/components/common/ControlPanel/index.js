@@ -1,2 +1,2 @@
-import ControlPanel from './ContolShort';
+import ControlPanel from './ControlPanel';
 export default ControlPanel;

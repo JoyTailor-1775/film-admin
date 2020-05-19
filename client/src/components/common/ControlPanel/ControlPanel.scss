@@ -1,0 +1,21 @@
+@import '../../../globals/variables.scss';
+
+.control-panel {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+
+  &__title {
+    text-transform: uppercase;
+    color: $dark-red;
+    margin: 0px;
+  }
+
+  &__actions {
+    display: flex;
+    justify-content: space-between;
+    padding: 5px;
+    box-sizing: border-box;
+  }
+}
