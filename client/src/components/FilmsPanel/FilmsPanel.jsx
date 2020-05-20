@@ -3,8 +3,7 @@ import Table from '../common/Table';
 import ControlPanel from '../ControlPanel';
 import Button from '../common/Button';
 import FileUploadPanel from '../FileUploadPanel';
-import Modal from '../common/Modal';
-import AddFilmForm from '../AddFilmForm';
+import AddFilmModal from '../AddFilmModal';
 
 const testData = [
   {
@@ -70,7 +69,7 @@ export default class FilmsPanel extends Component {
     this.setState({ visible: true });
   };
 
-  closeModal = () => {
+  closeModal = (e) => {
     this.setState({ visible: false });
   };
 
@@ -88,7 +87,7 @@ export default class FilmsPanel extends Component {
 
   render() {
     const tableColumns = [
-      { heading: 'Name', dataKey: 'title', width: '100px' },
+      { heading: 'Title', dataKey: 'title', width: '100px' },
       { heading: 'Year', dataKey: 'release_year', width: '100px' },
       { heading: 'Format', dataKey: 'format', width: '100px' },
       { heading: 'Cast', dataKey: 'cast', width: '190px' },
@@ -123,9 +122,7 @@ export default class FilmsPanel extends Component {
           onRowDelete={this.onRowDelete}
         />
         <FileUploadPanel />
-        <Modal title="Add new film" cancelButton={<Button text="Cancel" />}>
-          <AddFilmForm />
-        </Modal>
+        <AddFilmModal visible={this.state.visible} onModalClose={this.closeModal} />
       </div>
     );
   }

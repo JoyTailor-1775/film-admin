@@ -35,8 +35,8 @@
 
 .regular {
   color: #ffffff;
-  background-color: $black;
-  border: solid 1px $black;
+  background-color: $silver;
+  border: solid 1px $silver;
   &:hover {
     animation: regularHover 1.5s linear;
   }
@@ -108,11 +108,11 @@
 @keyframes regularHover {
   0%,
   100% {
-    background-color: $black;
+    background-color: $silver;
     color: #ffff;
   }
   50% {
     background-color: #ffff;
-    color: $black;
+    color: $silver;
   }
 }

@@ -1,12 +1,19 @@
 import React from 'react';
+import './TextInput.scss';
 
 const TextInput = ({ title, name, onChange, value }) => {
   return (
-    <div className="input__wrapper">
-      <label htmlFor={name} className="input__lable">
+    <div className="field">
+      <label htmlFor={name} className="field__lable">
         {title}
       </label>
-      <input type="text" onChange={onChange} value={value} className="input" />
+      <input
+        type="text"
+        name={name}
+        onChange={onChange}
+        value={value}
+        className="field__input"
+      />
     </div>
   );
 };

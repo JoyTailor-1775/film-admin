@@ -1,0 +1,52 @@
+@import '../../../globals/variables.scss';
+
+.modal {
+  background-color: #ffffff;
+  margin: 100px auto;
+  max-width: 350px;
+  border: solid 1px rgba($color: $dark-black, $alpha: 0.8);
+  border-radius: 15px;
+
+  &__background {
+    display: none;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    background-color: rgba($color: #000000, $alpha: 0.45);
+
+    &.show {
+      display: block;
+    }
+  }
+
+  &__title {
+    text-transform: uppercase;
+    color: $dark-black;
+    font-size: 22px;
+    text-align: center;
+    margin: 0px;
+    padding: 10px 0px;
+    border-bottom: solid 1px rgba($color: #000000, $alpha: 0.45);
+  }
+
+  &__content {
+    max-height: 320px;
+    overflow: auto;
+  }
+
+  &__footer {
+    padding: 7px 10px;
+    border-top: solid 1px rgba($color: #000000, $alpha: 0.45);
+    display: flex;
+    justify-content: flex-end;
+
+    .buttons {
+      min-width: 150px;
+      display: flex;
+      justify-content: space-between;
+    }
+  }
+}

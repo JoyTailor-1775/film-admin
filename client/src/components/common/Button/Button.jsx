@@ -7,6 +7,7 @@ const Button = ({
   color = 'primary',
   size = 'small',
   onClick,
+  form,
 }) => {
   const ButtonActionTypes = Object.freeze({
     button: 'button',
@@ -29,8 +30,11 @@ const Button = ({
   return (
     <button
       type={ButtonActionTypes[type]}
-      className={`button ${ButtonColorTypes[color]} ${ButtonSizeTypes[size]}`}
+      className={`button ${
+        ButtonColorTypes[color] ? ButtonColorTypes[color] : 'regular'
+      } ${ButtonSizeTypes[size] ? ButtonSizeTypes[size] : 'small'}`}
       onClick={onClick}
+      form={form && form}
     >
       {text}
     </button>

@@ -9,7 +9,7 @@ const FilmInfo = ({ film }) => {
         {film ? (
           <>
             <li className="film-info__list-item">
-              <span className="text key">Name :</span>
+              <span className="text key">Title :</span>
               <span className="text value">{film.title}</span>
             </li>
             <li className="film-info__list-item">
