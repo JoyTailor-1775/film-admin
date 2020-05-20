@@ -1,0 +1,78 @@
+@import '../../../globals/variables.scss';
+
+.multiple-field {
+  padding: 5px 10px;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  &__lable {
+    font-weight: 700;
+    color: $dark-red;
+  }
+
+  &__input {
+    padding: 5px;
+    box-sizing: border-box;
+    border: solid 1px $dark-red;
+    border-radius: 5px;
+    width: 70px;
+
+    &:focus {
+      outline: none;
+    }
+  }
+
+  &__interface {
+    padding: 10px 0px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+  }
+
+  &__data {
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    max-width: 230px;
+
+    .data-item {
+      padding-right: 5px;
+      &:last-child {
+        flex-grow: 1;
+      }
+
+      &__text {
+        display: inline-block;
+        padding-right: 5px;
+        font-size: 14px;
+        color: $dark-grey;
+      }
+
+      &__delete-button {
+        background-color: transparent;
+        border: none;
+        color: $dark-grey;
+        cursor: pointer;
+        display: inline-block;
+        padding: 0px;
+        &:focus {
+          outline: none;
+        }
+      }
+    }
+  }
+
+  &__controls {
+    padding-top: 10px;
+  }
+
+  &__input {
+    margin-right: 10px;
+  }
+}

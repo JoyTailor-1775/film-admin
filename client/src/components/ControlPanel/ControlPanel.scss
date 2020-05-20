@@ -1,0 +1,36 @@
+@import '../../globals/variables.scss';
+
+.control-panel {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+
+  &__title {
+    text-transform: uppercase;
+    color: $dark-red;
+    margin: 0px;
+  }
+
+  &__actions {
+    display: flex;
+    justify-content: space-between;
+    padding: 5px;
+    box-sizing: border-box;
+  }
+
+  .search-interface {
+    &__input {
+      padding: 5px;
+      box-sizing: border-box;
+      border: solid 1px rgba($color: #000000, $alpha: 0.6);
+      border-radius: 5px;
+      width: 100px;
+      margin-right: 20px;
+
+      &:focus {
+        outline: none;
+      }
+    }
+  }
+}
