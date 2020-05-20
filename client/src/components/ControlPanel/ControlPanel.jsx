@@ -8,6 +8,7 @@ export default class ControlPanel extends Component {
     super();
     this.state = {
       visible: false,
+      actor: '',
     };
   }
 
@@ -19,8 +20,15 @@ export default class ControlPanel extends Component {
     this.setState({ visible: false });
   };
 
-  onAddNewFilm = () => {
-    this.showModal();
+  searchByActor = (e) => {
+    e.preventDefault();
+    console.log('Lets do some searching, baby...');
+  };
+
+  onChange = (e) => {
+    this.setState({
+      [e.target.name]: e.target.value,
+    });
   };
 
   render() {
@@ -28,19 +36,23 @@ export default class ControlPanel extends Component {
       <>
         <div className="control-panel">
           <h2 className="control-panel__title">Films list</h2>
-          <form className="search-interface">
+          <form className="search-interface" onSubmit={this.searchByActor}>
             <input
               type="text"
+              name="actor"
               className="search-interface__input"
               placeholder="Search actor..."
+              value={this.state.actor}
+              onChange={this.onChange}
             />
+            <Button text="Search" type="submit" color="primary" size="small" />
           </form>
           <div className="control-panel__actions">
             <Button
               text="Add New"
               size="large"
               color="action"
-              onClick={this.onAddNewFilm}
+              onClick={this.showModal}
             />
           </div>
         </div>
