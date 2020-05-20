@@ -41,6 +41,26 @@
     &--delete {
       width: 90px;
     }
+
+    .triangle {
+      display: inline-block;
+      margin-left: 10px;
+      cursor: pointer;
+      width: 0;
+      height: 0;
+
+      &.desc {
+        border-left: 6px solid transparent;
+        border-right: 6px solid transparent;
+        border-bottom: 8px solid #ffffff;
+      }
+
+      &.asc {
+        border-left: 6px solid transparent;
+        border-right: 6px solid transparent;
+        border-top: 8px solid #ffffff;
+      }
+    }
   }
 
   &__row {
