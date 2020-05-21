@@ -72,11 +72,15 @@ export default class Table extends Component {
     });
   };
 
+  onRowClickOwn = (e, id) => {
+    if (e.target.nodeName === 'BUTTON') return;
+    this.props.onRowClick(id);
+  };
+
   render() {
     const {
       columns,
       data,
-      onRowClick,
       rowKey,
       loading = false,
       deletable = false,
@@ -118,14 +122,18 @@ export default class Table extends Component {
               </td>
             </tr>
           ) : data.length < 1 ? (
-            <p className="table__message">No data</p>
+            <tr className="table__row--no-data-msg">
+              <td>No Data</td>
+            </tr>
           ) : (
             data.map((obj) => {
               return (
                 <tr
                   className="table__row"
+                  align="center"
+                  valign="center"
                   key={obj[rowKey]}
-                  onClick={() => onRowClick(obj[rowKey])}
+                  onClick={(e) => this.onRowClickOwn(e, obj[rowKey])}
                 >
                   {columns.map((col, idx) => {
                     return (

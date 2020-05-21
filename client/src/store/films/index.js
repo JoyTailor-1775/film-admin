@@ -1,2 +1,2 @@
-export { default as gameActions } from './gameActions';
-export { default as gameOperations } from './gameOperations';
+export { default as filmsActions } from './actions';
+export { default as filmsOperations } from './operations';

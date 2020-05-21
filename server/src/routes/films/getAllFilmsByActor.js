@@ -3,8 +3,7 @@ const sendDbError = require('../../globals/sendDbError');
 const sendDbResponse = require('../../globals/sendDbResponse');
 
 const getAllFilmsByActor = (req, res) => {
-  const actor = req.body.actor;
-  console.log(actor);
+  const actor = req.query.actor;
   Film.find({ cast: actor })
     .then((data) => sendDbResponse(data, res))
     .catch((err) => sendDbError(err, res));

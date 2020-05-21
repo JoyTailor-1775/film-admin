@@ -1,4 +1,4 @@
-import types from './actionsTypes';
+import types from './actionTypes';
 
 const fetchRequest = () => ({
   type: types.FETCH_REQUEST,
@@ -23,8 +23,8 @@ const addFilm = (film) => ({
   payload: film,
 });
 
-const deleteFilm = (id) => ({
-  type: types.DELETE_FILM,
+const removeFilm = (id) => ({
+  type: types.REMOVE_FILM,
   payload: id,
 });
 
@@ -43,7 +43,7 @@ export default {
   fetchSuccess,
   uploadAllFilms,
   addFilm,
-  deleteFilm,
+  removeFilm,
   setActiveFilm,
   removeActiveFilm,
 };

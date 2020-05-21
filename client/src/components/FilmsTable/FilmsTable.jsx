@@ -1,70 +1,23 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import Table from '../common/Table';
 import sortStrings from '../../helpers/sortStrings';
-
-export default class FilmsTable extends Component {
-  constructor() {
-    super();
-    this.state = {
-      tableData: [
-        {
-          _id: 0,
-          title: 'Aome Title',
-          release_year: 2012,
-          format: 'DVD',
-          cast: ['Brad Pitt', 'Johny Cash'],
-        },
-        {
-          _id: 1,
-          title: 'Bulp Fiction',
-          release_year: 1999,
-          format: 'DVD',
-          cast: ['John Travolta', 'Tarantino', 'Jennifer Lawrence'],
-        },
-        {
-          _id: 2,
-          title: 'Zulp Fiction',
-          release_year: 1999,
-          format: 'DVD',
-          cast: ['John Travolta', 'Tarantino', 'Jennifer Lawrence'],
-        },
-        {
-          _id: 3,
-          title: 'Pulp Fiction',
-          release_year: 1999,
-          format: 'DVD',
-          cast: ['John Travolta', 'Tarantino', 'Jennifer Lawrence'],
-        },
-        {
-          _id: 4,
-          title: 'Pulp Fiction',
-          release_year: 1999,
-          format: 'DVD',
-          cast: ['John Travolta', 'Tarantino', 'Jennifer Lawrence'],
-        },
-        {
-          _id: 5,
-          title: 'Lulp Fiction',
-          release_year: 1999,
-          format: 'DVD',
-          cast: ['John Travolta', 'Tarantino', 'Jennifer Lawrence'],
-        },
-        {
-          _id: 6,
-          title: 'Fulp Fiction',
-          release_year: 1999,
-          format: 'DVD',
-          cast: ['John Travolta', 'Tarantino', 'Jennifer Lawrence'],
-        },
-      ],
-    };
+import { filmsActions, filmsOperations } from '../../store/films';
+class FilmsTable extends Component {
+  async componentDidMount() {
+    await this.props.requestFilms();
   }
+
   onRowClick = (id) => {
-    console.log('The next row is clicked', id);
+    const film = this.props.films.find((el) => el._id === id);
+    this.props.setActiveFilm(film);
   };
 
   onRowDelete = (id) => {
-    console.log('The next row is should be deleted', id);
+    if (this.props.activeFilm._id === id) {
+      this.props.removeActiveFilm();
+    }
+    this.props.removeFilm(id);
   };
 
   sortTitle = ({ dataKey, order }) => {
@@ -95,7 +48,7 @@ export default class FilmsTable extends Component {
       { heading: 'Cast', dataKey: 'cast', width: '190px' },
     ];
 
-    const formattedTableData = this.state.tableData.map((el) => {
+    const formattedTableData = this.props.films.map((el) => {
       return {
         ...el,
         cast: el.cast.join(', '),
@@ -109,8 +62,22 @@ export default class FilmsTable extends Component {
         data={formattedTableData}
         onRowClick={this.onRowClick}
         deletable={true}
-        onRowDelete={this.onRowDelete}
+        onDelete={this.onRowDelete}
       />
     );
   }
 }
+
+const mapStateToProps = (state) => ({
+  films: state.films.films,
+  activeFilm: state.films.activeFilm,
+});
+
+const MapDispatchToProps = {
+  requestFilms: filmsOperations.requestFilms,
+  removeFilm: filmsOperations.removeFilm,
+  setActiveFilm: filmsActions.setActiveFilm,
+  removeActiveFilm: filmsActions.removeActiveFilm,
+};
+
+export default connect(mapStateToProps, MapDispatchToProps)(FilmsTable);

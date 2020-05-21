@@ -17,42 +17,48 @@ const addFilm = (film) => async (dispatch) => {
   dispatch(actions.fetchRequest());
   try {
     const response = await api.addFilm(film);
-    dispatch(actions.addFilm(film));
+    dispatch(actions.addFilm(response));
     dispatch(actions.fetchSuccess());
   } catch (error) {
-    dispatch(actions.fetchError(error.error));
+    dispatch(actions.fetchError(error.message));
   }
 };
 
 const removeFilm = (id) => async (dispatch) => {
   dispatch(actions.fetchRequest());
   try {
-    const response = await api.removeFilm(id);
-    dispatch(actions.removeFilm(response.id));
+    const response = await api.deleteFilm(id);
+    dispatch(actions.removeFilm(response._id));
     dispatch(actions.fetchSuccess());
   } catch (error) {
-    dispatch(actions.fetchError(error.error));
+    console.log({ error });
+    dispatch(actions.fetchError(error.message));
   }
 };
 
 const uploadFilmsFile = (file) => async (dispatch) => {
   dispatch(actions.fetchRequest());
   try {
-    const response = await api.uploadFilmsFile(file);
+    await api.uploadFilmsFile(file);
     dispatch(actions.fetchSuccess());
     requestFilms();
   } catch (error) {
-    dispatch(actions.fetchError(error.error));
+    dispatch(actions.fetchError(error.message));
   }
 };
 
 const getFilmsByActor = (actor) => async (dispatch) => {
   dispatch(actions.fetchRequest());
   try {
-    const response = await api.uploadFilmsFile(actor);
-    dispatch(actions.uploadAllFilms(response));
+    let films;
+    if (actor) {
+      films = await api.getFilmsByActor(actor);
+    } else {
+      films = await api.getAllFilms();
+    }
+    dispatch(actions.uploadAllFilms(films));
   } catch (error) {
-    dispatch(actions.fetchError(error.error));
+    dispatch(actions.fetchError(error.message));
   }
 };
 
