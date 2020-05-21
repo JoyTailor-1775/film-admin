@@ -3,7 +3,6 @@ const formidable = require('formidable');
 const sendDbError = require('../../globals/sendDbError');
 const sendRegularError = require('../../globals/sendRegularError');
 const Film = require('../../modules/db/schemas/filmSchema');
-const renameObjKey = require('../../helpers/renameObjKey');
 
 const importFilmsFromFile = (req, res) => {
   const transpileTextFile = (file) => {
@@ -18,7 +17,8 @@ const importFilmsFromFile = (req, res) => {
      Firstly, we split the doc by double new-line chars \r\n , getting arrays
      of separate entities. Then we split them again by one new-line char
      and finally by the : sign, getting an array, where the first elem is 
-     a key name and the second one is the value.
+     a key name and the second one is the value. Also here 'stars' field name
+     is renamed for 'cast'.
     */
     let films = [];
     const chuncksArr = data.toString().split('\r\n\r\n');
@@ -31,7 +31,12 @@ const importFilmsFromFile = (req, res) => {
       chunckData.forEach((el) => {
         const keyValuePair = el.split(':');
         const formattedKey = keyValuePair[0].toLowerCase().split(' ').join('_');
-        filmObj[formattedKey] = keyValuePair[1];
+        console.log({ formattedKey });
+        if (formattedKey === 'stars') {
+          filmObj['cast'] = keyValuePair[1].split(',').map((el) => el.trim());
+        } else {
+          filmObj[formattedKey] = keyValuePair[1];
+        }
       });
       films.push(filmObj);
     });
@@ -48,11 +53,8 @@ const importFilmsFromFile = (req, res) => {
 
   new formidable.IncomingForm().parse(req, (err, fields, files) => {
     const films = transpileTextFile(files.file.path);
-    const formattedFilms = films.map((el) => {
-      return renameObjKey(el, 'stars', 'cast');
-    });
     Film.collection
-      .insertMany(formattedFilms)
+      .insertMany(films)
       .then(sendResponse)
       .catch((err) => sendDbError(err, res));
   });

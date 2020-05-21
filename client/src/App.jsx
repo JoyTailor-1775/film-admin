@@ -13,7 +13,7 @@ const filmObj = {
 
 export default class App extends Component {
   async componentDidMount() {
-    const films = await api.deleteFilm({ id: '5ec6611daee48d6575a99ca4' });
+    const films = await api.deleteFilm('5ec6611daee48d6575a99ca4');
     console.log(films);
   }
   render() {

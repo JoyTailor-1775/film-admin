@@ -28,7 +28,7 @@ const removeFilm = (id) => async (dispatch) => {
   dispatch(actions.fetchRequest());
   try {
     const response = await api.removeFilm(id);
-    dispatch(actions.removeFilm(id));
+    dispatch(actions.removeFilm(response.id));
     dispatch(actions.fetchSuccess());
   } catch (error) {
     dispatch(actions.fetchError(error.error));
@@ -46,9 +46,20 @@ const uploadFilmsFile = (file) => async (dispatch) => {
   }
 };
 
+const getFilmsByActor = (actor) => async (dispatch) => {
+  dispatch(actions.fetchRequest());
+  try {
+    const response = await api.uploadFilmsFile(actor);
+    dispatch(actions.uploadAllFilms(response));
+  } catch (error) {
+    dispatch(actions.fetchError(error.error));
+  }
+};
+
 export default {
   requestFilms,
   addFilm,
   removeFilm,
   uploadFilmsFile,
+  getFilmsByActor,
 };

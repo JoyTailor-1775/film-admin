@@ -26,3 +26,8 @@ export const uploadFilmsFile = async (file) => {
   const res = await axios.post('/films-import', file, config);
   return res.data;
 };
+
+export const getFilmsByActor = async (actor) => {
+  const res = await axios.get('/films-by-actor', actor);
+  return res.data;
+};
