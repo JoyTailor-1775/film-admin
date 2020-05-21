@@ -13,7 +13,7 @@ export const addFilm = async (film) => {
 };
 
 export const deleteFilm = async (id) => {
-  const res = await axios.post('/films-delete', id);
+  const res = await axios.post('/films-delete', { id: id });
   return res.data;
 };
 
