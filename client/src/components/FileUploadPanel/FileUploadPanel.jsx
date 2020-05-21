@@ -19,17 +19,11 @@ export default class FileUploadPanel extends Component {
 
   onFormSubmit = (e) => {
     e.preventDefault();
-    this.clearForm();
     console.log('submitted...');
-    // const url = 'http://example.com/file-upload';
-    // const formData = new FormData();
-    // formData.append('file',file)
-    // const config = {
-    //     headers: {
-    //         'content-type': 'multipart/form-data'
-    //     }
-    // }
-    // return  post(url, formData,config)
+    const formData = new FormData();
+    formData.append('file', this.statefile);
+    // ...
+    this.clearForm();
   };
 
   clearForm = () => {
