@@ -24,6 +24,9 @@ class ControlPanel extends Component {
 
   searchByActor = (e) => {
     e.preventDefault();
+    if (this.props.films.length < 1) {
+      return;
+    }
     this.props.getFilmsByActor(this.state.actor);
   };
 
@@ -68,4 +71,8 @@ const MapDispatchToProps = {
   getFilmsByActor: filmsOperations.getFilmsByActor,
 };
 
-export default connect(null, MapDispatchToProps)(ControlPanel);
+const MapStateToProps = (state) => ({
+  films: state.films.films,
+});
+
+export default connect(MapStateToProps, MapDispatchToProps)(ControlPanel);
