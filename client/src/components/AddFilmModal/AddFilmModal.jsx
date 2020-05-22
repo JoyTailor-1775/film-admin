@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import Modal from '../common/Modal';
 import Button from '../common/Button';
-import TextInput from '../common/TextInput';
+import Input from '../common/Input';
 import MultipleInput from '../common/MultipleInput';
 import './AddFilmModal.scss';
+import { filmsOperations } from '../../store/films';
+import getCurrentYear from '../../helpers/getCurrentYear';
 
 const INITIAL_STATE = Object.freeze({
   title: '',
@@ -13,7 +16,7 @@ const INITIAL_STATE = Object.freeze({
   validationPassed: true,
 });
 
-export default class AddFilmModal extends Component {
+class AddFilmModal extends Component {
   constructor(props) {
     super(props);
     this.props = props;
@@ -64,6 +67,8 @@ export default class AddFilmModal extends Component {
     this.setState({
       validationPassed: true,
     });
+    const { validationPassed, ...rest } = this.state;
+    this.props.addFilm(rest);
     this.clearState();
     this.props.onModalClose();
   };
@@ -82,19 +87,21 @@ export default class AddFilmModal extends Component {
         }
       >
         <form id="add-film" className="add-film-form" onSubmit={this.onSubmitFrom}>
-          <TextInput
+          <Input
             title="Title"
             name="title"
             onChange={this.onChange}
             value={this.state.title}
           />
-          <TextInput
+          <Input
             title="Year"
             name="release_year"
+            type="number"
+            max={getCurrentYear()}
             onChange={this.onChange}
             value={this.state.release_year}
           />
-          <TextInput
+          <Input
             title="Format"
             name="format"
             onChange={this.onChange}
@@ -118,3 +125,9 @@ export default class AddFilmModal extends Component {
     );
   }
 }
+
+const MapDispatchToProps = {
+  addFilm: filmsOperations.addFilm,
+};
+
+export default connect(null, MapDispatchToProps)(AddFilmModal);

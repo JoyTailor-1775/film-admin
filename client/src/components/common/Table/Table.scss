@@ -39,7 +39,7 @@
       border-radius: 0px 15px 0px 0px;
     }
     &--delete {
-      width: 90px;
+      width: 110px;
     }
 
     .triangle {
@@ -76,6 +76,14 @@
     &:hover {
       background-color: $deep-grey;
     }
+
+    &--no-data-msg {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 70px;
+      color: $dark-black;
+    }
   }
 
   &__cell {
@@ -85,9 +93,6 @@
 
     &--delete {
       width: 90px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
     }
   }
 

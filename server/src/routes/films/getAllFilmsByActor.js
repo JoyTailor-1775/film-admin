@@ -2,11 +2,11 @@ const Film = require('../../modules/db/schemas/filmSchema');
 const sendDbError = require('../../globals/sendDbError');
 const sendDbResponse = require('../../globals/sendDbResponse');
 
-const deleteFilm = (req, res) => {
-  const id = req.body.id;
-  Film.findOneAndDelete({ _id: id })
+const getAllFilmsByActor = (req, res) => {
+  const actor = req.query.actor;
+  Film.find({ cast: actor })
     .then((data) => sendDbResponse(data, res))
     .catch((err) => sendDbError(err, res));
 };
 
-module.exports = deleteFilm;
+module.exports = getAllFilmsByActor;

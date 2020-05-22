@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import './ControlPanel.scss';
 import Button from '../common/Button';
 import AddFilmModal from '../AddFilmModal';
+import { filmsOperations } from '../../store/films';
 
-export default class ControlPanel extends Component {
+class ControlPanel extends Component {
   constructor() {
     super();
     this.state = {
@@ -22,7 +24,7 @@ export default class ControlPanel extends Component {
 
   searchByActor = (e) => {
     e.preventDefault();
-    console.log('Lets do some searching, baby...');
+    this.props.getFilmsByActor(this.state.actor);
   };
 
   onChange = (e) => {
@@ -61,3 +63,9 @@ export default class ControlPanel extends Component {
     );
   }
 }
+
+const MapDispatchToProps = {
+  getFilmsByActor: filmsOperations.getFilmsByActor,
+};
+
+export default connect(null, MapDispatchToProps)(ControlPanel);
