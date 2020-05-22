@@ -35,7 +35,7 @@ class FilmsTable extends Component {
       {
         heading: 'Title',
         dataKey: 'title',
-        width: '100px',
+        width: '110px',
         sortable: true,
         sortFunc: this.sortTitle,
       },
