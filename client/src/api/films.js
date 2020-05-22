@@ -17,13 +17,8 @@ export const deleteFilm = async (id) => {
   return res.data.data;
 };
 
-export const uploadFilmsFile = async (file) => {
-  const config = {
-    headers: {
-      'content-type': 'multipart/form-data',
-    },
-  };
-  const res = await axios.post('/films-import', file, config);
+export const uploadFilmsFile = async (data) => {
+  const res = await axios.post('/films-import', data);
   return res.data.data;
 };
 

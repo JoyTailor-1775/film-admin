@@ -12,11 +12,11 @@ const INITIAL_FILM_STATE = Object.freeze({
 function filmsReducer(state = [], { type, payload }) {
   switch (type) {
     case types.UPLOAD_ALL_FILMS:
-      return payload;
+      return [...payload];
     case types.REMOVE_FILM:
       return state.filter((el) => el._id !== payload);
     case types.ADD_FILM:
-      return [...state, payload];
+      return [payload, ...state];
     default:
       return state;
   }

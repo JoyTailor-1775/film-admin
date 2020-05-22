@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import Button from '../common/Button';
 import './FileUploadPanel.scss';
-import formatUploadedFileName from '../../helpers/formatUploadedFileName';
-
-export default class FileUploadPanel extends Component {
+import { filmsOperations } from '../../store/films';
+class FileUploadPanel extends Component {
   constructor() {
     super();
     this.state = {
@@ -13,16 +13,15 @@ export default class FileUploadPanel extends Component {
 
   onChange = (e) => {
     this.setState({
-      [e.target.name]: e.target.value,
+      [e.target.name]: e.target.files[0],
     });
   };
 
-  onFormSubmit = (e) => {
+  onFormSubmit = async (e) => {
     e.preventDefault();
-    console.log('submitted...');
     const formData = new FormData();
-    formData.append('file', this.statefile);
-    // ...
+    formData.append('file', this.state.file);
+    await this.props.uploadFilmsFile(formData);
     this.clearForm();
   };
 
@@ -47,9 +46,7 @@ export default class FileUploadPanel extends Component {
             onChange={this.onChange}
           />
 
-          {this.state.file && (
-            <p className="chosen-file">{formatUploadedFileName(this.state.file)}</p>
-          )}
+          {this.state.file && <p className="chosen-file">{this.state.file.name}</p>}
         </div>
 
         <Button text="Submit" type="submit" color="action" size="large" />
@@ -57,3 +54,9 @@ export default class FileUploadPanel extends Component {
     );
   }
 }
+
+const MapDispatchToProps = {
+  uploadFilmsFile: filmsOperations.uploadFilmsFile,
+};
+
+export default connect(null, MapDispatchToProps)(FileUploadPanel);

@@ -22,15 +22,11 @@ class FilmsTable extends Component {
 
   sortTitle = ({ dataKey, order }) => {
     if (order === 'asc') {
-      const sortedData = sortStrings(this.state.tableData, dataKey);
-      this.setState({
-        tableData: sortedData,
-      });
+      const sortedData = sortStrings(this.props.films, dataKey);
+      this.props.uploadAllFilms(sortedData);
     } else if (order === 'desc') {
-      const sortedData = sortStrings(this.state.tableData, dataKey).reverse();
-      this.setState({
-        tableData: sortedData,
-      });
+      const sortedData = sortStrings(this.props.films, dataKey).reverse();
+      this.props.uploadAllFilms(sortedData);
     }
   };
 
@@ -63,6 +59,7 @@ class FilmsTable extends Component {
         onRowClick={this.onRowClick}
         deletable={true}
         onDelete={this.onRowDelete}
+        loading={this.props.loading}
       />
     );
   }
@@ -71,6 +68,7 @@ class FilmsTable extends Component {
 const mapStateToProps = (state) => ({
   films: state.films.films,
   activeFilm: state.films.activeFilm,
+  loading: state.films.loading,
 });
 
 const MapDispatchToProps = {
@@ -78,6 +76,7 @@ const MapDispatchToProps = {
   removeFilm: filmsOperations.removeFilm,
   setActiveFilm: filmsActions.setActiveFilm,
   removeActiveFilm: filmsActions.removeActiveFilm,
+  uploadAllFilms: filmsActions.uploadAllFilms,
 };
 
 export default connect(mapStateToProps, MapDispatchToProps)(FilmsTable);

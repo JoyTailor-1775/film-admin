@@ -31,7 +31,6 @@ const importFilmsFromFile = (req, res) => {
       chunckData.forEach((el) => {
         const keyValuePair = el.split(':');
         const formattedKey = keyValuePair[0].toLowerCase().split(' ').join('_');
-        console.log({ formattedKey });
         if (formattedKey === 'stars') {
           filmObj['cast'] = keyValuePair[1].split(',').map((el) => el.trim());
         } else {
@@ -55,7 +54,9 @@ const importFilmsFromFile = (req, res) => {
     const films = transpileTextFile(files.file.path);
     Film.collection
       .insertMany(films)
-      .then(sendResponse)
+      .then(() => {
+        Film.find().then(sendResponse).catch(sendDbError);
+      })
       .catch((err) => sendDbError(err, res));
   });
 };

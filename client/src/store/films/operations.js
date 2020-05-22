@@ -3,7 +3,6 @@ import actions from './actions';
 
 const requestFilms = () => async (dispatch) => {
   dispatch(actions.fetchRequest());
-
   try {
     const response = await api.getAllFilms();
     dispatch(actions.uploadAllFilms(response));
@@ -25,13 +24,10 @@ const addFilm = (film) => async (dispatch) => {
 };
 
 const removeFilm = (id) => async (dispatch) => {
-  dispatch(actions.fetchRequest());
   try {
     const response = await api.deleteFilm(id);
     dispatch(actions.removeFilm(response._id));
-    dispatch(actions.fetchSuccess());
   } catch (error) {
-    console.log({ error });
     dispatch(actions.fetchError(error.message));
   }
 };
@@ -39,9 +35,9 @@ const removeFilm = (id) => async (dispatch) => {
 const uploadFilmsFile = (file) => async (dispatch) => {
   dispatch(actions.fetchRequest());
   try {
-    await api.uploadFilmsFile(file);
+    const response = await api.uploadFilmsFile(file);
+    dispatch(actions.uploadAllFilms(response));
     dispatch(actions.fetchSuccess());
-    requestFilms();
   } catch (error) {
     dispatch(actions.fetchError(error.message));
   }
