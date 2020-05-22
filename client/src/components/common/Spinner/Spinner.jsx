@@ -1,6 +1,10 @@
 import React from 'react';
 import './Spinner.scss';
 
+/*
+  Minimalistic and reusable spinner.
+*/
+
 const Spinner = () => {
   return (
     <div className="sk-circle">

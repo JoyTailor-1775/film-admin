@@ -52,6 +52,8 @@ const getFilmsByActor = (actor) => async (dispatch) => {
     } else {
       films = await api.getAllFilms();
     }
+    dispatch(actions.fetchSuccess());
+
     dispatch(actions.uploadAllFilms(films));
   } catch (error) {
     dispatch(actions.fetchError(error.message));

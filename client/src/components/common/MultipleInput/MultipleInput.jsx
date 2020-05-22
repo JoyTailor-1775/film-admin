@@ -2,6 +2,18 @@ import React, { Component } from 'react';
 import './MultipleInput.scss';
 import Button from '../Button';
 
+/*
+  A Multiple component is a regular input element, with an array as it's
+  and, thus the possibility of multiple choice. The component needs next
+  required parameters to be used:
+    1) lable: String - the input's lable.
+    2) data : Array - the input's value.
+    3) onDeleteItem : Function - a method, that is called on deleting of
+        an input's value element.
+    4) cancelButton: <JSX/> - a slot for cancel button.
+    4) actionButton: <JSX/> - a slot for action button.
+*/
+
 export default class MultipleInput extends Component {
   constructor(props) {
     super(props);

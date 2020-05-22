@@ -1,6 +1,16 @@
 import React, { Component } from 'react';
 import './Modal.scss';
 
+/*
+  A Modal component needs next required parameters to be used:
+    1) visible: Boolean - show/hide the component.
+    2) title : String - the modal's title.
+    3) children: <JSX/> - the modal's inner content, should be 
+        semantic JSX - elements.
+    4) cancelButton: <JSX/> - a slot for cancel button.
+    4) actionButton: <JSX/> - a slot for action button.
+*/
+
 export default class Modal extends Component {
   onBackgroundClick = (e) => {
     if (e.target.id === 'modal-background') {
