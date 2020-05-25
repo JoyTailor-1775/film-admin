@@ -1,0 +1,30 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Button/> renders invalid button 1`] = `
+<button
+  className="button regular small"
+  onClick={[MockFunction]}
+>
+  Test Button
+</button>
+`;
+
+exports[`<Button/> renders simple button 1`] = `
+<button
+  className="button primary small"
+  onClick={[MockFunction]}
+  type="button"
+>
+  Test Button
+</button>
+`;
+
+exports[`<Button/> renders submit button 1`] = `
+<button
+  className="button primary small"
+  onClick={[MockFunction]}
+  type="submit"
+>
+  Test Button
+</button>
+`;
