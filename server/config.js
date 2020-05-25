@@ -6,4 +6,5 @@ module.exports = {
   dbUser,
   dbUserPassword,
   dbUrl: `mongodb+srv://${dbUser}:${dbUserPassword}@newcluster-yx8ss.mongodb.net/test?retryWrites=true`,
+  testDbUrl: `mongodb+srv://${dbUser}:${dbUserPassword}@newcluster-yx8ss.mongodb.net/testDatabase?retryWrites=true`,
 };

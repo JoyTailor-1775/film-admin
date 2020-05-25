@@ -1,0 +1,64 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Input/> renders invalid input 1`] = `
+<div
+  className="field"
+>
+  <label
+    className="field__lable"
+    htmlFor="testInput"
+  >
+    Test Input
+  </label>
+  <input
+    className="field__input"
+    name="testInput"
+    onChange={[MockFunction]}
+    type="text"
+    value="testValue"
+  />
+</div>
+`;
+
+exports[`<Input/> renders number input 1`] = `
+<div
+  className="field"
+>
+  <label
+    className="field__lable"
+    htmlFor="testInput"
+  >
+    Test Number Input
+  </label>
+  <input
+    className="field__input"
+    max="20"
+    min="5"
+    name="testInput"
+    onChange={[MockFunction]}
+    type="number"
+    value="testValue"
+  />
+</div>
+`;
+
+exports[`<Input/> renders simple input 1`] = `
+<div
+  className="field"
+>
+  <label
+    className="field__lable"
+    htmlFor="testInput"
+  >
+    Test Input
+  </label>
+  <input
+    className="field__input"
+    maxLength="20"
+    name="testInput"
+    onChange={[MockFunction]}
+    type="text"
+    value="testValue"
+  />
+</div>
+`;

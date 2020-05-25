@@ -9,6 +9,8 @@ import './Modal.scss';
         semantic JSX - elements.
     4) cancelButton: <JSX/> - a slot for cancel button.
     4) actionButton: <JSX/> - a slot for action button.
+    6) onModalClose: Function - a function, that will be called 
+        when the modal's background or cancel button are clicked.
 */
 
 export default class Modal extends Component {

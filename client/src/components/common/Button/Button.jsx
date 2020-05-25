@@ -25,6 +25,7 @@ import './Button.scss';
     4) form: Sting - this parameter is used with 'submit' button type. In case if the
       component is used outside its form, the neccessary form name may be passed to the
       component.
+    5) id: any - html id attribute.
 */
 
 const Button = ({
@@ -34,6 +35,7 @@ const Button = ({
   color = 'primary',
   size = 'small',
   form,
+  id,
 }) => {
   const ButtonActionTypes = Object.freeze({
     button: 'button',
@@ -61,6 +63,7 @@ const Button = ({
       } ${ButtonSizeTypes[size] ? ButtonSizeTypes[size] : 'small'}`}
       onClick={onClick}
       form={form && form}
+      id={id && id}
     >
       {text}
     </button>
