@@ -14,9 +14,9 @@ import './Input.scss';
         the html-attribute of the <input/> tag. The parameter may have next values:
         - number
         - text
-    2) maxLength: Number - parameter corresponds with the html-attribute of 
+    2) maxLength: String - parameter corresponds with the html-attribute of 
         the <input/> tag. 
-    3) min , max : Number - parameters are used with 'number' type, correspond
+    3) min , max : String - parameters are used with 'number' type, correspond
         with the html-attribute of the <input/> tag.
 */
 

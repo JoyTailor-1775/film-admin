@@ -5,7 +5,8 @@
   "scripts": {
     "start": "nodemon index.js",
     "debug": "node --inspect index.js",
-    "lint": "eslint *.js --fix"
+    "lint": "eslint *.js --fix",
+    "test": "jest --testTimeout=10000 --detectOpenHandles"
   },
   "author": "joy_tailor",
   "license": "MIT",
@@ -21,5 +22,14 @@
     "nodemon": "^2.0.4",
     "prettier": "^2.0.5"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "jest": "^26.0.1",
+    "supertest": "^4.0.2"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "coveragePathIgnorePatterns": [
+      "/node_modules/"
+    ]
+  }
 }

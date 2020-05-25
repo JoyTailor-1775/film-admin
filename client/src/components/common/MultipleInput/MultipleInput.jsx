@@ -10,8 +10,10 @@ import Button from '../Button';
     2) data : Array - the input's value.
     3) onDeleteItem : Function - a method, that is called on deleting of
         an input's value element.
-    4) cancelButton: <JSX/> - a slot for cancel button.
-    4) actionButton: <JSX/> - a slot for action button.
+    4) onAddItem : Function - a method, that is called on adding of an
+        input's value element.
+    5) cancelButton: <JSX/> - a slot for cancel button.
+    6) actionButton: <JSX/> - a slot for action button.
 */
 
 export default class MultipleInput extends Component {
