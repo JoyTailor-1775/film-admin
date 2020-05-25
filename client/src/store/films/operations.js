@@ -43,18 +43,12 @@ const uploadFilmsFile = (file) => async (dispatch) => {
   }
 };
 
-const getFilmsByActor = (actor) => async (dispatch) => {
+const getFilmsByParam = (params) => async (dispatch) => {
   dispatch(actions.fetchRequest());
   try {
-    let films;
-    if (actor) {
-      films = await api.getFilmsByActor(actor);
-    } else {
-      films = await api.getAllFilms();
-    }
+    const res = await api.getFilmsByParam(params);
     dispatch(actions.fetchSuccess());
-
-    dispatch(actions.uploadAllFilms(films));
+    dispatch(actions.uploadAllFilms(res));
   } catch (error) {
     dispatch(actions.fetchError(error.message));
   }
@@ -65,5 +59,5 @@ export default {
   addFilm,
   removeFilm,
   uploadFilmsFile,
-  getFilmsByActor,
+  getFilmsByParam,
 };

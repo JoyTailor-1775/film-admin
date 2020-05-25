@@ -10,7 +10,8 @@ class ControlPanel extends Component {
     super();
     this.state = {
       visible: false,
-      actor: '',
+      cast: '',
+      title: '',
     };
   }
 
@@ -22,12 +23,20 @@ class ControlPanel extends Component {
     this.setState({ visible: false });
   };
 
-  searchByActor = (e) => {
+  searchByParam = (e) => {
     e.preventDefault();
-    if (this.props.films.length < 1) {
+    if (!this.state.title && !this.state.cast) {
+      this.props.requestFilms();
       return;
     }
-    this.props.getFilmsByActor(this.state.actor);
+    const { visible, ...formFields } = this.state;
+    const requestParams = {};
+    for (const key in formFields) {
+      if (formFields[key]) {
+        requestParams[key] = formFields[key];
+      }
+    }
+    this.props.getFilmsByParam(requestParams);
   };
 
   onChange = (e) => {
@@ -41,15 +50,24 @@ class ControlPanel extends Component {
       <>
         <div className="control-panel">
           <h2 className="control-panel__title">Films list</h2>
-          <form className="search-interface" onSubmit={this.searchByActor}>
+          <form className="search-interface" onSubmit={this.searchByParam}>
             <input
               type="text"
-              name="actor"
+              name="title"
               className="search-interface__input"
-              placeholder="Search actor..."
-              value={this.state.actor}
+              placeholder="Search title..."
+              value={this.state.title}
               onChange={this.onChange}
             />
+            <input
+              type="text"
+              name="cast"
+              className="search-interface__input"
+              placeholder="Search actor..."
+              value={this.state.cast}
+              onChange={this.onChange}
+            />
+
             <Button text="Search" type="submit" color="primary" size="small" />
           </form>
           <div className="control-panel__actions">
@@ -68,7 +86,8 @@ class ControlPanel extends Component {
 }
 
 const MapDispatchToProps = {
-  getFilmsByActor: filmsOperations.getFilmsByActor,
+  getFilmsByParam: filmsOperations.getFilmsByParam,
+  requestFilms: filmsOperations.requestFilms,
 };
 
 const MapStateToProps = (state) => ({

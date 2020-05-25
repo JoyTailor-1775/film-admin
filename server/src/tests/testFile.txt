@@ -1,9 +1,0 @@
-Title: Blazing Saddles
-Release Year: 1974
-Format: VHS
-Stars: Mel Brooks, Clevon Little, Harvey Korman, Gene Wilder, Slim Pickens, Madeline Kahn
-
-Title: Some Title
-Release Year: 2005
-Format: VHS
-Stars: Mel Brooks, Clevon Little, Harvey Korman, Gene Wilder, Slim Pickens, Madeline Kahn

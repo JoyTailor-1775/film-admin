@@ -65,18 +65,11 @@ describe('Films endpoint', () => {
     expect(res.body).toHaveProperty('data');
   });
 
-  it('Should get all films with actor parameter', async () => {
-    const res = await supertest(app).get('/films-by-actor').send({
-      actor: 'Test actor',
+  it('Should get all films with parameter', async () => {
+    const res = await supertest(app).get('/films-by-param').send({
+      cast: 'Test actor',
+      title: 'Some title',
     });
-    expect(res.statusCode).toEqual(200);
-    expect(res.body).toHaveProperty('data');
-  });
-
-  it('Should accept a text file', async () => {
-    const formData = new FormData();
-    formData.append('file', testFile);
-    const res = await supertest(app).get('/films-by-actor').send(testData);
     expect(res.statusCode).toEqual(200);
     expect(res.body).toHaveProperty('data');
   });

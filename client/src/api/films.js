@@ -22,7 +22,9 @@ export const uploadFilmsFile = async (data) => {
   return res.data.data;
 };
 
-export const getFilmsByActor = async (actor) => {
-  const res = await axios.get('/films-by-actor', { params: { actor: actor } });
+export const getFilmsByParam = async (params) => {
+  const res = await axios.get('/films-by-param', {
+    params: params,
+  });
   return res.data.data;
 };
