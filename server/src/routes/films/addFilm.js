@@ -16,7 +16,7 @@ const addFilm = (req, res) => {
     .save()
     .then((data) => sendResponse(data))
     .catch((err) =>
-      sendDbError(err, res, 'There is such film in the database already.')
+      sendDbError(err, res, 'There is such film in the database already')
     );
 };
 

@@ -3,8 +3,9 @@ import { connect } from 'react-redux';
 import './App.scss';
 import FilmsPanel from './components/FilmsPanel';
 import FilmInfo from './components/FilmInfo';
+import PushNotification from './components/common/PushNotification';
 
-const App = ({ activeFilm }) => {
+const App = ({ activeFilm, error }) => {
   return (
     <main className="app">
       <h1 className="app__title">Films admin panel</h1>
@@ -16,6 +17,7 @@ const App = ({ activeFilm }) => {
           <FilmInfo film={activeFilm} />
         </section>
       </div>
+      <PushNotification err={error} msg={error && error.data.status} type="error" />
     </main>
   );
 };
@@ -23,6 +25,7 @@ const App = ({ activeFilm }) => {
 const mapStateToProps = function (state) {
   return {
     activeFilm: state.films.activeFilm,
+    error: state.films.error,
   };
 };
 

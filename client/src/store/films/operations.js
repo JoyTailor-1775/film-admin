@@ -8,7 +8,7 @@ const requestFilms = () => async (dispatch) => {
     dispatch(actions.uploadAllFilms(response));
     dispatch(actions.fetchSuccess());
   } catch (error) {
-    dispatch(actions.fetchError(error.message));
+    dispatch(actions.fetchError(error.response));
   }
 };
 
@@ -19,7 +19,7 @@ const addFilm = (film) => async (dispatch) => {
     dispatch(actions.addFilm(response));
     dispatch(actions.fetchSuccess());
   } catch (error) {
-    dispatch(actions.fetchError(error.message));
+    dispatch(actions.fetchError(error.response));
   }
 };
 
@@ -28,7 +28,7 @@ const removeFilm = (id) => async (dispatch) => {
     const response = await api.deleteFilm(id);
     dispatch(actions.removeFilm(response._id));
   } catch (error) {
-    dispatch(actions.fetchError(error.message));
+    dispatch(actions.fetchError(error.response));
   }
 };
 
@@ -39,7 +39,7 @@ const uploadFilmsFile = (file) => async (dispatch) => {
     dispatch(actions.uploadAllFilms(response));
     dispatch(actions.fetchSuccess());
   } catch (error) {
-    dispatch(actions.fetchError(error.message));
+    dispatch(actions.fetchError(error.response));
   }
 };
 
@@ -50,7 +50,7 @@ const getFilmsByParam = (params) => async (dispatch) => {
     dispatch(actions.fetchSuccess());
     dispatch(actions.uploadAllFilms(res));
   } catch (error) {
-    dispatch(actions.fetchError(error.message));
+    dispatch(actions.fetchError(error.response));
   }
 };
 
