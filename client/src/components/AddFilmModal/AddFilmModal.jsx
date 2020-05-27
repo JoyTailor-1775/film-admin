@@ -98,6 +98,7 @@ class AddFilmModal extends Component {
             name="release_year"
             type="number"
             max={getCurrentYear()}
+            min="1850"
             onChange={this.onChange}
             value={this.state.release_year}
           />
