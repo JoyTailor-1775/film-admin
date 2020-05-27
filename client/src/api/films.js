@@ -2,8 +2,16 @@ import axios from 'axios';
 
 axios.defaults.baseURL = 'http://localhost:3001/';
 
-export const getAllFilms = async () => {
-  const res = await axios.get('/films');
+export const getAllFilms = async (params) => {
+  const DEFAUL_REQUEST = Object.freeze({
+    pageNumber: 1,
+    pageSize: 10,
+    filters: {},
+  });
+  const res = await axios.get('/films', {
+    ...DEFAUL_REQUEST,
+    ...params,
+  });
   return res.data.data;
 };
 

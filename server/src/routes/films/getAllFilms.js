@@ -2,14 +2,30 @@ const Film = require('../../modules/db/schemas/filmSchema');
 const sendDbError = require('../../globals/sendDbError');
 const sendDbResponse = require('../../globals/sendDbResponse');
 
-const getAllFilms = (req, res) => {
-  const params = req.query;
-  const pageSize = params.pageSize ? params.pageSize : 10;
-  const pageNumber = params.pageNumber ? params.pageNumber : 1;
-  console.log((pageNumber - 1) * pageSize);
-  console.log(pageSize);
+const ALLOWED_PARAMS = Object.freeze({
+  title: 'title',
+  release_year: 'release_year',
+  format: 'format',
+  cast: 'cast',
+});
 
-  Film.find()
+const getAllFilms = (req, res) => {
+  const query = req.query;
+
+  const pageSize = query.pageSize ? query.pageSize : 10;
+  const pageNumber = query.pageNumber ? query.pageNumber : 1;
+
+  // Processing request with special filters, of number of the
+  // model fields.
+  const filters = req.query.filters;
+  const requestFilters = {};
+  if (filters) {
+    for (const key in filters) {
+      if (ALLOWED_PARAMS[key]) requestFilters[key] = filters[key];
+    }
+  }
+
+  Film.find(requestFilters)
     .skip((pageNumber - 1) * pageSize)
     .limit(pageSize)
     .exec((err, doc) => {

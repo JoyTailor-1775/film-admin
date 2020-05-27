@@ -5,10 +5,11 @@ const requestFilms = () => async (dispatch) => {
   dispatch(actions.fetchRequest());
   try {
     const response = await api.getAllFilms();
-    dispatch(actions.uploadAllFilms(response));
+    dispatch(actions.uploadAllFilms(response.data));
     dispatch(actions.fetchSuccess());
   } catch (error) {
-    dispatch(actions.fetchError(error.response));
+    // dispatch(actions.fetchError(error));
+    console.log(error);
   }
 };
 

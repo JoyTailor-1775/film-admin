@@ -13,7 +13,8 @@ const getAllFilmsByActor = (req, res) => {
   const params = req.query;
   const validParams = {};
   for (const key in params) {
-    if (ALLOWED_PARAMS[key]) validParams[key] = params[key];
+    if (ALLOWED_PARAMS[key])
+      validParams[key] = { $regex: params[key], $options: 'i' };
   }
 
   console.log({ validParams });
