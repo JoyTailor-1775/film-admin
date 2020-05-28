@@ -5,6 +5,7 @@ const server = require('./testServer');
 
 const connectToDb = require('../modules/db/connect-db');
 const { testDbUrl } = require('../../config');
+const Film = require('../modules/db/schemas/filmSchema');
 
 let app;
 let testFilm;
@@ -22,8 +23,9 @@ describe('Films endpoint', () => {
         title: 'Test title',
         release_year: '1999',
         format: 'Blue Ray',
-        cast: ['Test member', 'Test member 2'],
+        cast: ['Test member', 'Test member'],
       });
+    console.log({ res });
     expect(res.statusCode).toEqual(200);
     expect(res.body).toHaveProperty('data');
     testFilm = res.body;
@@ -42,10 +44,10 @@ describe('Films endpoint', () => {
       .post('/films-edit')
       .send({
         id: testFilm._id,
-        title: 'Test title',
+        title: 'Test title2',
         release_year: '1999',
         format: 'Blue Ray',
-        cast: ['Test member', 'Test member 2'],
+        cast: ['Test member', 'Test members'],
       });
     expect(res.statusCode).toEqual(200);
     expect(res.body).toHaveProperty('data');
@@ -65,17 +67,11 @@ describe('Films endpoint', () => {
     expect(res.body).toHaveProperty('data');
   });
 
-  it('Should get all films with parameter', async () => {
-    const res = await supertest(app).get('/films-by-param').send({
-      cast: 'Test actor',
-      title: 'Some title',
-    });
-    expect(res.statusCode).toEqual(200);
-    expect(res.body).toHaveProperty('data');
-  });
-
   afterAll(async (done) => {
     app.close();
+    await Film.deleteMany({}, function () {
+      console.log('collection removed');
+    });
     mongoose.disconnect();
     done();
   });

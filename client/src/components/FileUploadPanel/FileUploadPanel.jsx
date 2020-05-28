@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Button from '../common/Button';
 import './FileUploadPanel.scss';
-import { filmsOperations } from '../../store/films';
+import { filmsOperations, filmsActions } from '../../store/films';
 class FileUploadPanel extends Component {
   constructor() {
     super();
@@ -19,9 +19,22 @@ class FileUploadPanel extends Component {
 
   onFormSubmit = async (e) => {
     e.preventDefault();
+    if (!this.state.file) {
+      return;
+    }
     const formData = new FormData();
     formData.append('file', this.state.file);
-    await this.props.uploadFilmsFile(formData);
+    const res = await this.props.uploadFilmsFile(formData);
+    if (res) {
+      this.props.sendNotification({
+        msg: 'The file has been uploaded successfully',
+        type: 'success',
+      });
+      this.props.setRequestParam({
+        pageNumber: 1,
+      });
+      await this.props.requestFilms(this.props.filmRequest);
+    }
     this.clearForm();
   };
 
@@ -55,8 +68,15 @@ class FileUploadPanel extends Component {
   }
 }
 
+const MapStateToProps = (state) => ({
+  filmRequest: state.films.filmRequest,
+});
+
 const MapDispatchToProps = {
   uploadFilmsFile: filmsOperations.uploadFilmsFile,
+  requestFilms: filmsOperations.requestFilms,
+  setRequestParam: filmsActions.setRequestParam,
+  sendNotification: filmsActions.sendNotification,
 };
 
-export default connect(null, MapDispatchToProps)(FileUploadPanel);
+export default connect(MapStateToProps, MapDispatchToProps)(FileUploadPanel);

@@ -37,6 +37,16 @@ const removeActiveFilm = () => ({
   type: types.REMOVE_ACTIVE_FILM,
 });
 
+const setRequestParam = (payload) => ({
+  type: types.SET_FILM_REQUEST_PARAM,
+  payload: payload,
+});
+
+const sendNotification = (payload) => ({
+  type: types.SEND_NOTIFICATION,
+  payload: payload,
+});
+
 export default {
   fetchRequest,
   fetchError,
@@ -46,4 +56,6 @@ export default {
   removeFilm,
   setActiveFilm,
   removeActiveFilm,
+  setRequestParam,
+  sendNotification,
 };

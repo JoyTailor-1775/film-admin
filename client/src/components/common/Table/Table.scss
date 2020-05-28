@@ -8,6 +8,10 @@
   table-layout: fixed;
   color: $dark-black;
 
+  &.bottom-rounded {
+    border-radius: 15px;
+  }
+
   &__head {
     display: block;
     color: $dark-black;
@@ -88,6 +92,47 @@
       align-items: center;
       height: 70px;
       color: $dark-black;
+    }
+
+    &--footer {
+      display: flex;
+      justify-content: flex-end;
+      background-color: $dark-grey;
+      border-radius: 0px 0px 15px 15px;
+
+      .pagination {
+        padding: 10px 15px;
+        color: #ffff;
+        font-size: 22px;
+        font-weight: 900;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        &__arrow {
+          border: solid #ffff;
+          border-width: 0 4px 4px 0;
+          display: inline-block;
+          width: 10px;
+          height: 10px;
+          cursor: pointer;
+
+          &.right {
+            transform: rotate(-45deg);
+            -webkit-transform: rotate(-45deg);
+          }
+
+          &.left {
+            transform: rotate(135deg);
+            -webkit-transform: rotate(135deg);
+          }
+
+          &.disable {
+            cursor: not-allowed;
+            border-color: rgba($color: #ffff, $alpha: 0.4);
+          }
+        }
+      }
     }
   }
 

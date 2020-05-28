@@ -4,9 +4,11 @@ import Modal from '../common/Modal';
 import Button from '../common/Button';
 import Input from '../common/Input';
 import MultipleInput from '../common/MultipleInput';
+import Select from '../common/Select';
 import './AddFilmModal.scss';
-import { filmsOperations } from '../../store/films';
+import { filmsOperations, filmsActions } from '../../store/films';
 import getCurrentYear from '../../helpers/getCurrentYear';
+import wordsWithSpaces from '../../helpers/wordsWithSpaces';
 
 const INITIAL_STATE = Object.freeze({
   title: '',
@@ -14,7 +16,10 @@ const INITIAL_STATE = Object.freeze({
   format: '',
   cast: [],
   validationPassed: true,
+  validationMessage: '',
 });
+
+const FORMAT_OPTIONS = Object.freeze(['DVD', 'Blue Ray', 'VHS']);
 
 class AddFilmModal extends Component {
   constructor(props) {
@@ -26,6 +31,7 @@ class AddFilmModal extends Component {
       format: '',
       cast: [],
       validationPassed: true,
+      validationMessage: '',
     };
   }
 
@@ -51,7 +57,18 @@ class AddFilmModal extends Component {
     });
   };
 
-  onSubmitFrom = (e) => {
+  validateCastField = (value) => {
+    const result = wordsWithSpaces.test(value);
+    if (!result) {
+      this.setState({
+        validationPassed: false,
+        validationMessage: 'The cast field should contain only letters!',
+      });
+    }
+    return result;
+  };
+
+  onSubmitFrom = async (e) => {
     e.preventDefault();
     if (
       !this.state.title ||
@@ -61,6 +78,7 @@ class AddFilmModal extends Component {
     ) {
       this.setState({
         validationPassed: false,
+        validationMessage: 'Please, fill all the fields!',
       });
       return;
     }
@@ -68,9 +86,16 @@ class AddFilmModal extends Component {
       validationPassed: true,
     });
     const { validationPassed, ...rest } = this.state;
-    this.props.addFilm(rest);
-    this.clearState();
-    this.props.onModalClose();
+    const res = await this.props.addFilm(rest);
+    if (res) {
+      this.clearState();
+      this.props.onModalClose();
+      this.props.requestFilms(this.props.filmRequest);
+      this.props.sendNotification({
+        msg: 'The film has been added successfully',
+        type: 'success',
+      });
+    }
   };
 
   render() {
@@ -98,27 +123,35 @@ class AddFilmModal extends Component {
             name="release_year"
             type="number"
             max={getCurrentYear()}
+            min="1850"
             onChange={this.onChange}
             value={this.state.release_year}
           />
-          <Input
+          <Select
             title="Format"
             name="format"
             onChange={this.onChange}
             value={this.state.format}
+            options={FORMAT_OPTIONS.map((el) => {
+              return {
+                value: el,
+                title: el,
+              };
+            })}
           />
           <MultipleInput
             lable="Cast"
             data={this.state.cast}
             onAddItem={this.onAddCastMember}
             onDeleteItem={this.onDeleteCastMember}
+            fieldValidation={this.validateCastField}
           />
           <p
             className={`validation-message ${
               this.state.validationPassed ? 'hide' : 'show'
             }`}
           >
-            Please, fill all the fields!
+            {this.state.validationMessage}
           </p>
         </form>
       </Modal>
@@ -126,8 +159,14 @@ class AddFilmModal extends Component {
   }
 }
 
+const MapStateToProps = (state) => ({
+  filmRequest: state.films.filmRequest,
+});
+
 const MapDispatchToProps = {
   addFilm: filmsOperations.addFilm,
+  requestFilms: filmsOperations.requestFilms,
+  sendNotification: filmsActions.sendNotification,
 };
 
-export default connect(null, MapDispatchToProps)(AddFilmModal);
+export default connect(MapStateToProps, MapDispatchToProps)(AddFilmModal);

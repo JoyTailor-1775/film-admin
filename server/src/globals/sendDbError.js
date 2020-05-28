@@ -1,7 +1,7 @@
-const sendError = (error, res) => {
+const sendError = (error, res, status) => {
   res.status(400),
     res.json({
-      status: 'Database error.',
+      status: status ? status : 'Database error',
       error: error.stack,
     });
 };

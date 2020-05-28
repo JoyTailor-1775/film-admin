@@ -1,0 +1,9 @@
+@import '../../globals/variables.scss';
+
+.message {
+  font-weight: 700;
+  font-size: 20px;
+  text-align: center;
+  color: $dark-black;
+  padding: 0px 10px;
+}

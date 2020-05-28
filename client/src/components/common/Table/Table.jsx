@@ -4,7 +4,7 @@ import Spinner from '../Spinner';
 import './Table.scss';
 /*
   A Table component needs next required parameters to be used:
-    1) columns - an array of objects, which represents the properties of 
+    1) columns: [Object] - an array of objects, which represents the properties of 
         the table columns. Each column objects should looks like:
         {
           heading: String,
@@ -28,13 +28,19 @@ import './Table.scss';
         uniqueness is assurred.
 
   The Table also has optional parameters:
-    1) loading - boolean (default value = false). Determines wheter to show a loading
+    1) loading: Boolean (default value = false). Determines wheter to show a loading
         message.
-    2) deletable - boolean (default value = false). When setted to true, a Delete
+    2) deletable: Boolean (default value = false). When setted to true, a Delete
         column is appeared in the table.
-    3) onDelete - function (default value = () => ({})). Used with deletable flag.
+    3) onDelete: Function (default value = () => ({})). Used with deletable flag.
         A method, which is called whenever a Delete button is clicked on a certain
         row. Returns an id of the clicked row.
+    4) pagination: Boolean (default value = false) - enables/disables pagination.
+    4) page - number (default value = 1) - pagination parameter, represents current page number.
+    5) onPageChange: Function - pagination parameters, a function, that is called whenever
+        pagination arrows are clicked. Returns page number and page change direction (asc or desc)
+    6) totalPages: Number (default value = 1) - pagination paramter, used for correct
+        pagination limitation work.
 */
 
 export default class Table extends Component {
@@ -77,6 +83,17 @@ export default class Table extends Component {
     this.props.onRowClick(id);
   };
 
+  onPageChangeOwn = (direction) => {
+    console.log(this.props.page, this.props.totalPages);
+    if (this.props.page === 1 && direction === 'desc') {
+      return;
+    }
+    if (this.props.page === this.props.totalPages && direction === 'asc') {
+      return;
+    }
+    this.props.onPageChange(direction);
+  };
+
   render() {
     const {
       columns,
@@ -85,9 +102,12 @@ export default class Table extends Component {
       loading = false,
       deletable = false,
       onDelete = () => ({}),
+      pagination = false,
+      page = 1,
+      totalPages = 1,
     } = this.props;
     return (
-      <table className="table">
+      <table className={`table ${pagination && 'bottom-rounded'}`}>
         <thead className="table__head">
           <tr className="table__row">
             {columns.map((col, idx) => {
@@ -140,9 +160,9 @@ export default class Table extends Component {
                       <td
                         className="table__cell"
                         key={idx}
-                        style={{ width: col.width ? col.width : '50px' }}
+                        style={{ width: col.width || '50px' }}
                       >
-                        {obj[col.dataKey] ? obj[col.dataKey] : ''}
+                        {obj[col.dataKey] || ''}
                       </td>
                     );
                   })}
@@ -160,6 +180,25 @@ export default class Table extends Component {
             })
           )}
         </tbody>
+        {pagination && (
+          <tfoot className="table__footer">
+            <tr className="table__row--footer ">
+              <td className="pagination">
+                <div
+                  className={`pagination__arrow left ${page < 2 && 'disable'}`}
+                  onClick={() => this.onPageChangeOwn('desc')}
+                ></div>
+                <div className="pagination__page-number">{page}</div>
+                <div
+                  className={`pagination__arrow right ${
+                    page >= totalPages && 'disable'
+                  }`}
+                  onClick={() => this.onPageChangeOwn('asc')}
+                ></div>
+              </td>
+            </tr>
+          </tfoot>
+        )}
       </table>
     );
   }

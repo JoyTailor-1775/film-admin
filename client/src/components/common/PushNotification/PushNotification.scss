@@ -1,0 +1,61 @@
+@import '../../../globals/variables.scss';
+
+.push-notification {
+  display: none;
+  position: absolute;
+  z-index: 9999;
+  bottom: 0px;
+  right: -100vh;
+  padding: 12px 20px;
+  color: #ffff;
+  font-weight: 900;
+  text-transform: uppercase;
+  font-size: 18px;
+  border-radius: 20px;
+  max-width: 250px;
+
+  &.error {
+    background-color: $red;
+  }
+
+  &.success {
+    background-color: $green;
+  }
+
+  &.warning {
+    background-color: $yellow;
+  }
+
+  &.show {
+    display: block;
+    right: 20px;
+    animation: appear 2s ease-in-out;
+  }
+
+  &.hide {
+    display: block;
+    animation: disappear 2s ease-in-out;
+  }
+
+  &__message {
+    margin: 0px;
+  }
+}
+
+@keyframes appear {
+  0% {
+    right: -100vh;
+  }
+  100% {
+    right: 20px;
+  }
+}
+
+@keyframes disappear {
+  0% {
+    right: 20px;
+  }
+  100% {
+    right: -100vh;
+  }
+}

@@ -17,3 +17,14 @@ The author would also like to notion several things about the app:
 2. I do not stick to any strict testing principle, and I'd readily accept any approach, that my team will use. So here test
    are added just to show my personal skills in their understanding, no dogmatic or philosophic sences this project's tests
    imply.
+
+UPDATES FOR THE REWORKED VERSION:
+
+I've made message box functionality looks differently in different situations, to wit:
+
+1.  A modal-window for a film deletion confirmation.
+2.  Push-notifications for successfull/unsuccessfull results of other actions.
+
+Tough, there was no such different in the task descriptions, I believe such logical differentiation
+would be a better UX approach, at least preventing user for ultimate clicking on a 'Close' button,
+whenever we commit any kind of action.
