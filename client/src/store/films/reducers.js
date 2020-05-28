@@ -77,6 +77,9 @@ function errorReducer(state = null, { type, payload }) {
     case types.FETCH_ERROR:
       return payload;
 
+    case types.FETCH_SUCCESS:
+      return null;
+
     default:
       return state;
   }
