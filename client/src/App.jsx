@@ -5,7 +5,7 @@ import FilmsPanel from './components/FilmsPanel';
 import FilmInfo from './components/FilmInfo';
 import PushNotification from './components/common/PushNotification';
 
-const App = ({ activeFilm, error }) => {
+const App = ({ activeFilm, error, filmsNotification }) => {
   return (
     <main className="app">
       <h1 className="app__title">Films admin panel</h1>
@@ -17,7 +17,8 @@ const App = ({ activeFilm, error }) => {
           <FilmInfo film={activeFilm} />
         </section>
       </div>
-      <PushNotification err={error} msg={error && error.status} type="error" />
+      <PushNotification msg={error && error.status} type="error" />
+      <PushNotification msg={filmsNotification.msg} types={filmsNotification.type} />
     </main>
   );
 };
@@ -26,6 +27,7 @@ const mapStateToProps = function (state) {
   return {
     activeFilm: state.films.activeFilm,
     error: state.films.error,
+    filmsNotification: state.films.notification,
   };
 };
 

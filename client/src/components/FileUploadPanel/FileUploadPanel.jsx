@@ -19,10 +19,17 @@ class FileUploadPanel extends Component {
 
   onFormSubmit = async (e) => {
     e.preventDefault();
+    if (!this.state.file) {
+      return;
+    }
     const formData = new FormData();
     formData.append('file', this.state.file);
     const res = await this.props.uploadFilmsFile(formData);
     if (res) {
+      this.props.sendNotification({
+        msg: 'The file has been uploaded successfully',
+        type: 'success',
+      });
       this.props.setRequestParam({
         pageNumber: 1,
       });
@@ -69,6 +76,7 @@ const MapDispatchToProps = {
   uploadFilmsFile: filmsOperations.uploadFilmsFile,
   requestFilms: filmsOperations.requestFilms,
   setRequestParam: filmsActions.setRequestParam,
+  sendNotification: filmsActions.sendNotification,
 };
 
 export default connect(MapStateToProps, MapDispatchToProps)(FileUploadPanel);

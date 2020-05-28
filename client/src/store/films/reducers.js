@@ -39,7 +39,22 @@ function filmRequestReducer(state = INITIAL_REQUEST, { type, payload }) {
     case types.SET_FILM_REQUEST_PARAM:
       return Object.assign(INITIAL_REQUEST, payload);
     default:
-      return INITIAL_REQUEST;
+      return state;
+  }
+}
+
+const NOTIFICATION_CONFIG = Object.freeze({
+  msg: '',
+  type: '',
+});
+
+function notificationReducer(state = NOTIFICATION_CONFIG, { type, payload }) {
+  switch (type) {
+    case types.SEND_NOTIFICATION:
+      return payload;
+
+    default:
+      return state;
   }
 }
 
@@ -73,4 +88,5 @@ export default combineReducers({
   films: filmsReducer,
   activeFilm: activeFilmReducer,
   filmRequest: filmRequestReducer,
+  notification: notificationReducer,
 });

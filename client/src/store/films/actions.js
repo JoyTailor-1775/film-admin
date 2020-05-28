@@ -42,6 +42,11 @@ const setRequestParam = (payload) => ({
   payload: payload,
 });
 
+const sendNotification = (payload) => ({
+  type: types.SEND_NOTIFICATION,
+  payload: payload,
+});
+
 export default {
   fetchRequest,
   fetchError,
@@ -52,4 +57,5 @@ export default {
   setActiveFilm,
   removeActiveFilm,
   setRequestParam,
+  sendNotification,
 };

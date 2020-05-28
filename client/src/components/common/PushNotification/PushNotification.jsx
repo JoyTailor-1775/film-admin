@@ -23,7 +23,7 @@ export default class PushNotification extends Component {
   };
 
   componentDidUpdate(prevProps) {
-    if (this.props.err && prevProps.err !== this.props.err) {
+    if (this.props.msg && prevProps.msg !== this.props.msg) {
       this.showNotification();
     }
   }

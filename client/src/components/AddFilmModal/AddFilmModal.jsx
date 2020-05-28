@@ -6,7 +6,7 @@ import Input from '../common/Input';
 import MultipleInput from '../common/MultipleInput';
 import Select from '../common/Select';
 import './AddFilmModal.scss';
-import { filmsOperations } from '../../store/films';
+import { filmsOperations, filmsActions } from '../../store/films';
 import getCurrentYear from '../../helpers/getCurrentYear';
 import wordsWithSpaces from '../../helpers/wordsWithSpaces';
 
@@ -91,6 +91,10 @@ class AddFilmModal extends Component {
       this.clearState();
       this.props.onModalClose();
       this.props.requestFilms(this.props.filmRequest);
+      this.props.sendNotification({
+        msg: 'The film has been added successfully',
+        type: 'success',
+      });
     }
   };
 
@@ -162,6 +166,7 @@ const MapStateToProps = (state) => ({
 const MapDispatchToProps = {
   addFilm: filmsOperations.addFilm,
   requestFilms: filmsOperations.requestFilms,
+  sendNotification: filmsActions.sendNotification,
 };
 
 export default connect(MapStateToProps, MapDispatchToProps)(AddFilmModal);
