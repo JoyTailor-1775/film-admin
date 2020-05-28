@@ -51,7 +51,7 @@ class AddFilmModal extends Component {
     });
   };
 
-  onSubmitFrom = (e) => {
+  onSubmitFrom = async (e) => {
     e.preventDefault();
     if (
       !this.state.title ||
@@ -68,13 +68,10 @@ class AddFilmModal extends Component {
       validationPassed: true,
     });
     const { validationPassed, ...rest } = this.state;
-    try {
-      this.props.addFilm(rest);
-      this.clearState();
-      this.props.onModalClose();
-    } catch (error) {
-      console.log(error);
-    }
+    await this.props.addFilm(rest);
+    this.clearState();
+    this.props.onModalClose();
+    this.props.requestFilms(this.props.filmRequest);
   };
 
   render() {
@@ -131,8 +128,13 @@ class AddFilmModal extends Component {
   }
 }
 
+const MapStateToProps = (state) => ({
+  filmRequest: state.films.filmRequest,
+});
+
 const MapDispatchToProps = {
   addFilm: filmsOperations.addFilm,
+  requestFilms: filmsOperations.requestFilms,
 };
 
-export default connect(null, MapDispatchToProps)(AddFilmModal);
+export default connect(MapStateToProps, MapDispatchToProps)(AddFilmModal);

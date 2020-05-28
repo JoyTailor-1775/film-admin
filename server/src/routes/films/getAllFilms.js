@@ -19,17 +19,17 @@ const SORTING_ORDERS = Object.freeze({
 const getAllFilms = (req, res) => {
   const query = req.query;
 
-  const pageSize = query.pageSize || 10;
-  const pageNumber = query.pageNumber || 1;
+  const pageSize = query.pageSize ? Number(query.pageSize) : 10;
+  const pageNumber = query.pageNumber ? Number(query.pageNumber) : 1;
 
   // Processing request with special filters, of number of the
   // model fields.
-  const filters = req.query.filters;
   const requestFilters = {};
-  if (filters) {
-    for (const key in filters) {
+  if (req.query.filters) {
+    const parsedFilters = JSON.parse(req.query.filters);
+    for (const key in parsedFilters) {
       if (FILTERABLE_PARAMS[key])
-        requestFilters[key] = `_normalized_${filters[key]}`;
+        requestFilters[key] = `_normalized_${parsedFilters[key]}`;
     }
   }
 
@@ -41,13 +41,12 @@ const getAllFilms = (req, res) => {
   if something unexpected has been passed as sorting param
   to a valid field - 'asc' param is set by default.
   */
-
   const requestSortParams = {};
   if (query.sortParams) {
-    for (const param in query.sortParams) {
+    const parsedParams = JSON.parse(query.sortParams);
+    for (const param in parsedParams) {
       if (SORTABLE_PARAMS[param]) {
-        requestSortParams[param] =
-          SORTING_ORDERS[query.sortParams[param]] || 'asc';
+        requestSortParams[param] = SORTING_ORDERS[parsedParams[param]] || 'asc';
       }
     }
   }

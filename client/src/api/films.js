@@ -3,18 +3,9 @@ import axios from 'axios';
 axios.defaults.baseURL = 'http://localhost:3001/';
 
 export const getAllFilms = async (params) => {
-  const DEFAUL_REQUEST = Object.freeze({
-    pageNumber: 1,
-    pageSize: 10,
-    filters: {},
-    sortParams: {
-      title: 'asc',
-    },
-  });
-  const res = await axios.get('/films', {
-    ...DEFAUL_REQUEST,
-    ...params,
-  });
+  console.log({ params });
+  const res = await axios.get('/films', { params: params });
+  console.log({ res });
   return res.data.data;
 };
 
@@ -30,12 +21,5 @@ export const deleteFilm = async (id) => {
 
 export const uploadFilmsFile = async (data) => {
   const res = await axios.post('/films-import', data);
-  return res.data.data;
-};
-
-export const getFilmsByParam = async (params) => {
-  const res = await axios.get('/films-by-param', {
-    params: params,
-  });
   return res.data.data;
 };

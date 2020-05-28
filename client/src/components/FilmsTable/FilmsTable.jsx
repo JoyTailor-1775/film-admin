@@ -1,33 +1,32 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Table from '../common/Table';
-import sortStrings from '../../helpers/sortStrings';
 import { filmsActions, filmsOperations } from '../../store/films';
 class FilmsTable extends Component {
   async componentDidMount() {
-    await this.props.requestFilms();
+    await this.props.requestFilms(this.props.filmRequest);
   }
 
   onRowClick = (id) => {
-    const film = this.props.films.find((el) => el._id === id);
+    const film = this.props.films.data.find((el) => el._id === id);
     this.props.setActiveFilm(film);
   };
 
-  onRowDelete = (id) => {
+  onRowDelete = async (id) => {
     if (this.props.activeFilm._id === id) {
       this.props.removeActiveFilm();
     }
-    this.props.removeFilm(id);
+    await this.props.removeFilm(id);
+    await this.props.requestFilms(this.props.filmRequest);
   };
 
-  sortTitle = ({ dataKey, order }) => {
-    if (order === 'asc') {
-      const sortedData = sortStrings(this.props.films, dataKey);
-      this.props.uploadAllFilms(sortedData);
-    } else if (order === 'desc') {
-      const sortedData = sortStrings(this.props.films, dataKey).reverse();
-      this.props.uploadAllFilms(sortedData);
-    }
+  sortTitle = async ({ dataKey, order }) => {
+    this.props.setRequestParam({
+      sortParams: {
+        [dataKey]: order,
+      },
+    });
+    await this.props.requestFilms(this.props.filmRequest);
   };
 
   render() {
@@ -44,12 +43,14 @@ class FilmsTable extends Component {
       { heading: 'Cast', dataKey: 'cast', width: '190px' },
     ];
 
-    const formattedTableData = this.props.films.map((el) => {
-      return {
-        ...el,
-        cast: el.cast.join(', '),
-      };
-    });
+    const formattedTableData = this.props.films.data
+      ? this.props.films.data.map((el) => {
+          return {
+            ...el,
+            cast: el.cast.join(', '),
+          };
+        })
+      : [];
 
     return (
       <Table
@@ -69,6 +70,7 @@ const mapStateToProps = (state) => ({
   films: state.films.films,
   activeFilm: state.films.activeFilm,
   loading: state.films.loading,
+  filmRequest: state.films.filmRequest,
 });
 
 const MapDispatchToProps = {
@@ -77,6 +79,7 @@ const MapDispatchToProps = {
   setActiveFilm: filmsActions.setActiveFilm,
   removeActiveFilm: filmsActions.removeActiveFilm,
   uploadAllFilms: filmsActions.uploadAllFilms,
+  setRequestParam: filmsActions.setRequestParam,
 };
 
 export default connect(mapStateToProps, MapDispatchToProps)(FilmsTable);

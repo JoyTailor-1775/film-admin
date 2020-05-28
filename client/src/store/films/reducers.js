@@ -9,14 +9,10 @@ const INITIAL_FILM_STATE = Object.freeze({
   cast: [],
 });
 
-function filmsReducer(state = [], { type, payload }) {
+function filmsReducer(state = {}, { type, payload }) {
   switch (type) {
     case types.UPLOAD_ALL_FILMS:
-      return [...payload];
-    case types.REMOVE_FILM:
-      return state.filter((el) => el._id !== payload);
-    case types.ADD_FILM:
-      return [payload, ...state];
+      return { ...payload };
     default:
       return state;
   }
@@ -30,6 +26,20 @@ function activeFilmReducer(state = INITIAL_FILM_STATE, { type, payload }) {
       return INITIAL_FILM_STATE;
     default:
       return state;
+  }
+}
+
+const INITIAL_REQUEST = {
+  pageNumber: 1,
+  pageSize: 10,
+};
+
+function filmRequestReducer(state = INITIAL_REQUEST, { type, payload }) {
+  switch (type) {
+    case types.SET_FILM_REQUEST_PARAM:
+      return Object.assign(INITIAL_REQUEST, payload);
+    default:
+      return INITIAL_REQUEST;
   }
 }
 
@@ -65,4 +75,5 @@ export default combineReducers({
   error: errorReducer,
   films: filmsReducer,
   activeFilm: activeFilmReducer,
+  filmRequest: filmRequestReducer,
 });

@@ -6,6 +6,7 @@ const REMOVE_FILM = 'films/REMOVE_FILM';
 const ADD_FILM = 'films/ADD_FILM';
 const SET_ACTIVE_FILM = 'films/SET_ACTIVE_FILM';
 const REMOVE_ACTIVE_FILM = 'films/REMOVE_ACTIVE_FILM';
+const SET_FILM_REQUEST_PARAM = 'films/SET_REQUEST_PARAM';
 
 export default {
   FETCH_REQUEST,
@@ -16,4 +17,5 @@ export default {
   ADD_FILM,
   SET_ACTIVE_FILM,
   REMOVE_ACTIVE_FILM,
+  SET_FILM_REQUEST_PARAM,
 };
