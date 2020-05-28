@@ -7,6 +7,7 @@ import MultipleInput from '../common/MultipleInput';
 import './AddFilmModal.scss';
 import { filmsOperations } from '../../store/films';
 import getCurrentYear from '../../helpers/getCurrentYear';
+import wordsWithSpaces from '../../helpers/wordsWithSpaces';
 
 const INITIAL_STATE = Object.freeze({
   title: '',
@@ -14,6 +15,7 @@ const INITIAL_STATE = Object.freeze({
   format: '',
   cast: [],
   validationPassed: true,
+  validationMessage: '',
 });
 
 class AddFilmModal extends Component {
@@ -26,6 +28,7 @@ class AddFilmModal extends Component {
       format: '',
       cast: [],
       validationPassed: true,
+      validationMessage: '',
     };
   }
 
@@ -51,6 +54,17 @@ class AddFilmModal extends Component {
     });
   };
 
+  validateCastField = (value) => {
+    const result = wordsWithSpaces.test(value);
+    if (!result) {
+      this.setState({
+        validationPassed: false,
+        validationMessage: 'The cast field should contain only letters!',
+      });
+    }
+    return result;
+  };
+
   onSubmitFrom = async (e) => {
     e.preventDefault();
     if (
@@ -61,6 +75,7 @@ class AddFilmModal extends Component {
     ) {
       this.setState({
         validationPassed: false,
+        validationMessage: 'Please, fill all the fields!',
       });
       return;
     }
@@ -114,13 +129,14 @@ class AddFilmModal extends Component {
             data={this.state.cast}
             onAddItem={this.onAddCastMember}
             onDeleteItem={this.onDeleteCastMember}
+            fieldValidation={this.validateCastField}
           />
           <p
             className={`validation-message ${
               this.state.validationPassed ? 'hide' : 'show'
             }`}
           >
-            Please, fill all the fields!
+            {this.state.validationMessage}
           </p>
         </form>
       </Modal>

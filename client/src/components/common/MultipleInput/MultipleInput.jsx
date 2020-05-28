@@ -14,7 +14,14 @@ import Button from '../Button';
         input's value element.
     5) cancelButton: <JSX/> - a slot for cancel button.
     6) actionButton: <JSX/> - a slot for action button.
-*/
+  The component also has optional parameters:
+    1) fieldValidation: Function - a function, that is used to validate
+      the component field. Must return Boolean, accepts current input value
+      as a single parameter. Note, that there is no error handling
+      mechanism in the component, you may just pass a validation function, 
+      which will prevent the component input to submit, but you should handle
+      the validation function expeption out of the component.
+  */
 
 export default class MultipleInput extends Component {
   constructor(props) {
@@ -38,6 +45,12 @@ export default class MultipleInput extends Component {
       this.setState({
         currentInput: '',
       });
+      return;
+    }
+    if (
+      this.props.fieldValidation &&
+      !this.props.fieldValidation(this.state.currentInput)
+    ) {
       return;
     }
     this.props.onAddItem(this.state.currentInput);

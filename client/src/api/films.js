@@ -3,9 +3,7 @@ import axios from 'axios';
 axios.defaults.baseURL = 'http://localhost:3001/';
 
 export const getAllFilms = async (params) => {
-  console.log({ params });
   const res = await axios.get('/films', { params: params });
-  console.log({ res });
   return res.data.data;
 };
 
