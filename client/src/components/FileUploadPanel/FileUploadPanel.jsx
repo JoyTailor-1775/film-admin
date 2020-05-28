@@ -21,12 +21,14 @@ class FileUploadPanel extends Component {
     e.preventDefault();
     const formData = new FormData();
     formData.append('file', this.state.file);
-    await this.props.uploadFilmsFile(formData);
-    this.props.setRequestParam({
-      pageNumber: 1,
-    });
-    await this.props.requestFilms(this.props.filmRequest);
-    // this.clearForm();
+    const res = await this.props.uploadFilmsFile(formData);
+    if (res) {
+      this.props.setRequestParam({
+        pageNumber: 1,
+      });
+      await this.props.requestFilms(this.props.filmRequest);
+    }
+    this.clearForm();
   };
 
   clearForm = () => {

@@ -1,8 +1,16 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Table from '../common/Table';
+import ConfirmDeleteModal from '../ConfirmDeleteModal';
 import { filmsActions, filmsOperations } from '../../store/films';
 class FilmsTable extends Component {
+  constructor() {
+    super();
+    this.state = {
+      confirmModalVisibile: false,
+      idUnderDeletion: null,
+    };
+  }
   async componentDidMount() {
     await this.props.requestFilms(this.props.filmRequest);
   }
@@ -12,12 +20,19 @@ class FilmsTable extends Component {
     this.props.setActiveFilm(film);
   };
 
-  onRowDelete = async (id) => {
-    if (this.props.activeFilm._id === id) {
+  onRowDelete = (id) => {
+    this.setState({ idUnderDeletion: id });
+    this.showConfirmModal();
+  };
+
+  onDeleteFilm = async () => {
+    if (this.props.activeFilm._id === this.state.idUnderDeletion) {
       this.props.removeActiveFilm();
     }
-    await this.props.removeFilm(id);
+    this.closeConfirmModal();
+    await this.props.removeFilm(this.state.idUnderDeletion);
     await this.props.requestFilms(this.props.filmRequest);
+    this.setState({ idUnderDeletion: null });
   };
 
   sortTitle = async ({ dataKey, order }) => {
@@ -37,6 +52,18 @@ class FilmsTable extends Component {
           : this.props.films.pageNumber - 1,
     });
     await this.props.requestFilms(this.props.filmRequest);
+  };
+
+  showConfirmModal = () => {
+    this.setState({
+      confirmModalVisibile: true,
+    });
+  };
+
+  closeConfirmModal = () => {
+    this.setState({
+      confirmModalVisibile: false,
+    });
   };
 
   render() {
@@ -63,19 +90,27 @@ class FilmsTable extends Component {
       : [];
 
     return (
-      <Table
-        columns={tableColumns}
-        rowKey="_id"
-        data={formattedTableData}
-        onRowClick={this.onRowClick}
-        deletable={true}
-        onDelete={this.onRowDelete}
-        loading={this.props.loading}
-        pagination={true}
-        page={this.props.films.pageNumber}
-        totalPages={Math.ceil(this.props.films.total / this.props.films.pageSize)}
-        onPageChange={this.onPageChange}
-      />
+      <>
+        <Table
+          columns={tableColumns}
+          rowKey="_id"
+          data={formattedTableData}
+          onRowClick={this.onRowClick}
+          deletable={true}
+          onDelete={this.onRowDelete}
+          loading={this.props.loading}
+          pagination={true}
+          page={this.props.films.pageNumber}
+          totalPages={Math.ceil(this.props.films.total / this.props.films.pageSize)}
+          onPageChange={this.onPageChange}
+        />
+        <ConfirmDeleteModal
+          visible={this.state.confirmModalVisibile}
+          maxWidth="200px"
+          onCancel={this.closeConfirmModal}
+          onDelete={this.onDeleteFilm}
+        />
+      </>
     );
   }
 }

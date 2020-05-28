@@ -17,8 +17,10 @@ const addFilm = (film) => async (dispatch) => {
   try {
     await api.addFilm(film);
     dispatch(actions.fetchSuccess());
+    return true;
   } catch (error) {
     dispatch(actions.fetchError(error.response.data));
+    return false;
   }
 };
 
@@ -35,8 +37,10 @@ const uploadFilmsFile = (file) => async (dispatch) => {
   try {
     await api.uploadFilmsFile(file);
     dispatch(actions.fetchSuccess());
+    return true;
   } catch (error) {
     dispatch(actions.fetchError(error.response.data));
+    return false;
   }
 };
 

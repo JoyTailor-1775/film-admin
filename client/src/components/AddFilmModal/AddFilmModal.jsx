@@ -86,10 +86,12 @@ class AddFilmModal extends Component {
       validationPassed: true,
     });
     const { validationPassed, ...rest } = this.state;
-    await this.props.addFilm(rest);
-    this.clearState();
-    this.props.onModalClose();
-    this.props.requestFilms(this.props.filmRequest);
+    const res = await this.props.addFilm(rest);
+    if (res) {
+      this.clearState();
+      this.props.onModalClose();
+      this.props.requestFilms(this.props.filmRequest);
+    }
   };
 
   render() {
