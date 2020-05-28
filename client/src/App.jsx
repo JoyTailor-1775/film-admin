@@ -17,7 +17,7 @@ const App = ({ activeFilm, error }) => {
           <FilmInfo film={activeFilm} />
         </section>
       </div>
-      <PushNotification err={error} msg={error && error.data.status} type="error" />
+      <PushNotification err={error} msg={error && error.status} type="error" />
     </main>
   );
 };

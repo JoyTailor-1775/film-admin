@@ -19,5 +19,6 @@ export const deleteFilm = async (id) => {
 
 export const uploadFilmsFile = async (data) => {
   const res = await axios.post('/films-import', data);
+  console.log({ res });
   return res.data.data;
 };

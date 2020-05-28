@@ -26,7 +26,7 @@ class FileUploadPanel extends Component {
       pageNumber: 1,
     });
     await this.props.requestFilms(this.props.filmRequest);
-    this.clearForm();
+    // this.clearForm();
   };
 
   clearForm = () => {

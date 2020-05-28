@@ -8,7 +8,7 @@ const requestFilms = (params) => async (dispatch) => {
     dispatch(actions.uploadAllFilms(response));
     dispatch(actions.fetchSuccess());
   } catch (error) {
-    dispatch(actions.fetchError(error));
+    dispatch(actions.fetchError(error.response.data));
   }
 };
 
@@ -18,7 +18,7 @@ const addFilm = (film) => async (dispatch) => {
     await api.addFilm(film);
     dispatch(actions.fetchSuccess());
   } catch (error) {
-    dispatch(actions.fetchError(error.response));
+    dispatch(actions.fetchError(error.response.data));
   }
 };
 
@@ -26,7 +26,7 @@ const removeFilm = (id) => async (dispatch) => {
   try {
     await api.deleteFilm(id);
   } catch (error) {
-    dispatch(actions.fetchError(error.response));
+    dispatch(actions.fetchError(error.response.data));
   }
 };
 
@@ -36,7 +36,7 @@ const uploadFilmsFile = (file) => async (dispatch) => {
     await api.uploadFilmsFile(file);
     dispatch(actions.fetchSuccess());
   } catch (error) {
-    dispatch(actions.fetchError(error.response));
+    dispatch(actions.fetchError(error.response.data));
   }
 };
 
