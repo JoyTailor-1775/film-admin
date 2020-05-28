@@ -7,6 +7,7 @@ const filmSchema = new Schema({
   release_year: String,
   format: String,
   cast: [String],
+  _normalized_title: String,
 });
 
 filmSchema.index(
@@ -14,6 +15,10 @@ filmSchema.index(
   { unique: true }
 );
 filmSchema.plugin(timestamp);
+
+filmSchema.pre('save', function () {
+  this._normalized_title = this.title.toUpperCase();
+});
 
 const Film = mongoose.model('Film', filmSchema);
 

@@ -32,7 +32,7 @@ const Input = ({ title, name, type, onChange, value, maxLength, min, max }) => {
         {title}
       </label>
       <input
-        type={SUPPORTED_TYPES[type] ? SUPPORTED_TYPES[type] : 'text'}
+        type={SUPPORTED_TYPES[type] || 'text'}
         name={name}
         onChange={onChange}
         value={value}

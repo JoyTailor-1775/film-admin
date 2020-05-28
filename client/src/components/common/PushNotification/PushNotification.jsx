@@ -34,7 +34,7 @@ export default class PushNotification extends Component {
       <div
         className={`push-notification ${
           this.state.visibility && this.state.visibility
-        } ${COLOR_TYPES[type] ? COLOR_TYPES[type] : 'success'}`}
+        } ${COLOR_TYPES[type] || 'success'}`}
       >
         <p className="push-notification__message">{msg}</p>
       </div>

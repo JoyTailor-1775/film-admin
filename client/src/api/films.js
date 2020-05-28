@@ -7,6 +7,9 @@ export const getAllFilms = async (params) => {
     pageNumber: 1,
     pageSize: 10,
     filters: {},
+    sortParams: {
+      title: 'asc',
+    },
   });
   const res = await axios.get('/films', {
     ...DEFAUL_REQUEST,

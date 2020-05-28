@@ -140,9 +140,9 @@ export default class Table extends Component {
                       <td
                         className="table__cell"
                         key={idx}
-                        style={{ width: col.width ? col.width : '50px' }}
+                        style={{ width: col.width || '50px' }}
                       >
-                        {obj[col.dataKey] ? obj[col.dataKey] : ''}
+                        {obj[col.dataKey] || ''}
                       </td>
                     );
                   })}
