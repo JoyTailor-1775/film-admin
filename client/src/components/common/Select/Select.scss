@@ -1,0 +1,27 @@
+@import '../../../globals/variables.scss';
+
+.select {
+  padding: 5px;
+  box-sizing: border-box;
+  border: solid 1px $dark-red;
+  border-radius: 5px;
+  width: 170px;
+  outline: none;
+  background-color: #ffffff;
+
+  &:focus {
+    outline: none;
+  }
+  &__wrapper {
+    padding: 5px 10px;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__label {
+    font-weight: 700;
+    color: $dark-red;
+  }
+}

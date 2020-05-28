@@ -4,6 +4,7 @@ import Modal from '../common/Modal';
 import Button from '../common/Button';
 import Input from '../common/Input';
 import MultipleInput from '../common/MultipleInput';
+import Select from '../common/Select';
 import './AddFilmModal.scss';
 import { filmsOperations } from '../../store/films';
 import getCurrentYear from '../../helpers/getCurrentYear';
@@ -17,6 +18,8 @@ const INITIAL_STATE = Object.freeze({
   validationPassed: true,
   validationMessage: '',
 });
+
+const FORMAT_OPTIONS = Object.freeze(['DVD', 'Blue Ray', 'VHS']);
 
 class AddFilmModal extends Component {
   constructor(props) {
@@ -118,11 +121,17 @@ class AddFilmModal extends Component {
             onChange={this.onChange}
             value={this.state.release_year}
           />
-          <Input
+          <Select
             title="Format"
             name="format"
             onChange={this.onChange}
             value={this.state.format}
+            options={FORMAT_OPTIONS.map((el) => {
+              return {
+                value: el,
+                title: el,
+              };
+            })}
           />
           <MultipleInput
             lable="Cast"
