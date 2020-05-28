@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Button from '../common/Button';
 import './FileUploadPanel.scss';
-import { filmsOperations } from '../../store/films';
+import { filmsOperations, filmsActions } from '../../store/films';
 class FileUploadPanel extends Component {
   constructor() {
     super();
@@ -22,6 +22,9 @@ class FileUploadPanel extends Component {
     const formData = new FormData();
     formData.append('file', this.state.file);
     await this.props.uploadFilmsFile(formData);
+    this.props.setRequestParam({
+      pageNumber: 1,
+    });
     await this.props.requestFilms(this.props.filmRequest);
     this.clearForm();
   };
@@ -63,6 +66,7 @@ const MapStateToProps = (state) => ({
 const MapDispatchToProps = {
   uploadFilmsFile: filmsOperations.uploadFilmsFile,
   requestFilms: filmsOperations.requestFilms,
+  setRequestParam: filmsActions.setRequestParam,
 };
 
 export default connect(MapStateToProps, MapDispatchToProps)(FileUploadPanel);

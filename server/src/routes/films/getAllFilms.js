@@ -36,8 +36,6 @@ const getAllFilms = (req, res) => {
     }
   }
 
-  console.log({ requestFilters });
-
   /*
   Setting up sorting options with setting default
   and safe values in case of unexpected params have
@@ -66,7 +64,7 @@ const getAllFilms = (req, res) => {
         sendDbError(err, res);
         return;
       }
-      Film.countDocuments({}).exec((countError, count) => {
+      Film.countDocuments(requestFilters).exec((countError, count) => {
         if (err) {
           sendDbError(countError, res);
           return;
@@ -74,8 +72,8 @@ const getAllFilms = (req, res) => {
         sendDbResponse(
           {
             total: count,
-            page: pageNumber,
-            pageSize: doc.length,
+            pageNumber: pageNumber,
+            pageSize: pageSize,
             data: doc,
           },
           res

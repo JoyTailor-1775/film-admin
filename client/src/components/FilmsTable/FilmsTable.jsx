@@ -29,6 +29,16 @@ class FilmsTable extends Component {
     await this.props.requestFilms(this.props.filmRequest);
   };
 
+  onPageChange = async (direction) => {
+    this.props.setRequestParam({
+      pageNumber:
+        direction === 'asc'
+          ? this.props.films.pageNumber + 1
+          : this.props.films.pageNumber - 1,
+    });
+    await this.props.requestFilms(this.props.filmRequest);
+  };
+
   render() {
     const tableColumns = [
       {
@@ -61,6 +71,10 @@ class FilmsTable extends Component {
         deletable={true}
         onDelete={this.onRowDelete}
         loading={this.props.loading}
+        pagination={true}
+        page={this.props.films.pageNumber}
+        totalPages={Math.ceil(this.props.films.total / this.props.films.pageSize)}
+        onPageChange={this.onPageChange}
       />
     );
   }

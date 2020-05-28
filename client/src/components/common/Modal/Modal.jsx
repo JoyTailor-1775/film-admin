@@ -11,6 +11,9 @@ import './Modal.scss';
     4) actionButton: <JSX/> - a slot for action button.
     6) onModalClose: Function - a function, that will be called 
         when the modal's background or cancel button are clicked.
+  The modal component also has next optional parameters:
+    1) maxWidth: String (default value - 350px) - css-attribute. 
+    2) minWidth: String (default value - 0px) - css-attribute.
 */
 
 export default class Modal extends Component {
@@ -20,7 +23,15 @@ export default class Modal extends Component {
     }
   };
   render() {
-    const { visible, title, children, cancelButton, actionButton } = this.props;
+    const {
+      visible,
+      title,
+      children,
+      cancelButton,
+      actionButton,
+      maxWidth = '350px',
+      minWidth = '0px',
+    } = this.props;
     return (
       <div
         id="modal-background"
@@ -28,7 +39,7 @@ export default class Modal extends Component {
         onClick={this.onBackgroundClick}
         ref={this.backgroundRef}
       >
-        <div className="modal">
+        <div className="modal" style={{ maxWidth: maxWidth, minWidth: minWidth }}>
           <h3 className="modal__title">{title}</h3>
           <main className="modal__content">{children}</main>
           <footer className="modal__footer">

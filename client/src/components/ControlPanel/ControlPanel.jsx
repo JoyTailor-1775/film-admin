@@ -32,7 +32,7 @@ class ControlPanel extends Component {
         requestParams[key] = formFields[key];
       }
     }
-    this.props.setRequestParam({ filters: requestParams });
+    this.props.setRequestParam({ filters: requestParams, pageNumber: 1 });
     this.props.requestFilms(this.props.filmRequest);
   };
 
