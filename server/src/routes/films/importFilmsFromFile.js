@@ -34,7 +34,7 @@ const importFilmsFromFile = (req, res) => {
         if (formattedKey === 'stars') {
           filmObj['cast'] = keyValuePair[1].split(',').map((el) => el.trim());
         } else {
-          filmObj[formattedKey] = keyValuePair[1];
+          filmObj[formattedKey] = keyValuePair[1].trim();
         }
       });
       films.push(filmObj);
@@ -52,12 +52,27 @@ const importFilmsFromFile = (req, res) => {
 
   new formidable.IncomingForm().parse(req, (err, fields, files) => {
     const films = transpileTextFile(files.file.path);
-    Film.collection
-      .insertMany(films)
-      .then(() => {
-        Film.find().then(sendResponse).catch(sendDbError);
-      })
-      .catch((err) => sendDbError(err, res));
+
+    const filmPromises = films.map((film) => {
+      const newFilm = Film(film);
+      return new Promise((resolve, reject) => {
+        newFilm.save((error, result) => {
+          if (error) {
+            reject(error);
+          }
+          resolve(result);
+        });
+      });
+    });
+
+    Promise.all(filmPromises).then(
+      (results) => {
+        sendResponse(results);
+      },
+      (error) => {
+        sendDbError(error, res);
+      }
+    );
   });
 };
 

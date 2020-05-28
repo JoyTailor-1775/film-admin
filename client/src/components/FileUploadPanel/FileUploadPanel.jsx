@@ -22,6 +22,7 @@ class FileUploadPanel extends Component {
     const formData = new FormData();
     formData.append('file', this.state.file);
     await this.props.uploadFilmsFile(formData);
+    await this.props.requestFilms(this.props.filmRequest);
     this.clearForm();
   };
 
@@ -55,8 +56,13 @@ class FileUploadPanel extends Component {
   }
 }
 
+const MapStateToProps = (state) => ({
+  filmRequest: state.films.filmRequest,
+});
+
 const MapDispatchToProps = {
   uploadFilmsFile: filmsOperations.uploadFilmsFile,
+  requestFilms: filmsOperations.requestFilms,
 };
 
-export default connect(null, MapDispatchToProps)(FileUploadPanel);
+export default connect(MapStateToProps, MapDispatchToProps)(FileUploadPanel);
