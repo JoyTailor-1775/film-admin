@@ -12,8 +12,8 @@ const SORTABLE_PARAMS = Object.freeze({
 });
 
 const SORTING_ORDERS = Object.freeze({
-  asc: 'asc',
-  desc: 'desc',
+  asc: 1,
+  desc: -1,
 });
 
 const getAllFilms = (req, res) => {
@@ -29,9 +29,14 @@ const getAllFilms = (req, res) => {
     const parsedFilters = JSON.parse(req.query.filters);
     for (const key in parsedFilters) {
       if (FILTERABLE_PARAMS[key])
-        requestFilters[key] = `_normalized_${parsedFilters[key]}`;
+        requestFilters[key] = {
+          $regex: parsedFilters[key],
+          $options: 'i',
+        };
     }
   }
+
+  console.log({ requestFilters });
 
   /*
   Setting up sorting options with setting default
@@ -46,7 +51,8 @@ const getAllFilms = (req, res) => {
     const parsedParams = JSON.parse(query.sortParams);
     for (const param in parsedParams) {
       if (SORTABLE_PARAMS[param]) {
-        requestSortParams[param] = SORTING_ORDERS[parsedParams[param]] || 'asc';
+        requestSortParams[`_normalized_${param}`] =
+          SORTING_ORDERS[parsedParams[param]] || 1;
       }
     }
   }

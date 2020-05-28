@@ -17,7 +17,7 @@ filmSchema.index(
 filmSchema.plugin(timestamp);
 
 filmSchema.pre('save', function () {
-  this._normalized_title = this.title.toUpperCase();
+  this._normalized_title = this.title.toLowerCase();
 });
 
 const Film = mongoose.model('Film', filmSchema);

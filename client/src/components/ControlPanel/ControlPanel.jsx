@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import './ControlPanel.scss';
 import Button from '../common/Button';
 import AddFilmModal from '../AddFilmModal';
-import { filmsOperations } from '../../store/films';
+import { filmsOperations, filmsActions } from '../../store/films';
 
 class ControlPanel extends Component {
   constructor() {
@@ -25,10 +25,6 @@ class ControlPanel extends Component {
 
   searchByParam = (e) => {
     e.preventDefault();
-    if (!this.state.title && !this.state.cast) {
-      this.props.requestFilms();
-      return;
-    }
     const { visible, ...formFields } = this.state;
     const requestParams = {};
     for (const key in formFields) {
@@ -36,7 +32,8 @@ class ControlPanel extends Component {
         requestParams[key] = formFields[key];
       }
     }
-    this.props.getFilmsByParam(requestParams);
+    this.props.setRequestParam({ filters: requestParams });
+    this.props.requestFilms(this.props.filmRequest);
   };
 
   onChange = (e) => {
@@ -86,12 +83,13 @@ class ControlPanel extends Component {
 }
 
 const MapDispatchToProps = {
-  getFilmsByParam: filmsOperations.getFilmsByParam,
   requestFilms: filmsOperations.requestFilms,
+  setRequestParam: filmsActions.setRequestParam,
 };
 
 const MapStateToProps = (state) => ({
   films: state.films.films,
+  filmRequest: state.films.filmRequest,
 });
 
 export default connect(MapStateToProps, MapDispatchToProps)(ControlPanel);
